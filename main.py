@@ -29,12 +29,16 @@ def main(location, recursive, filename):
         raise SystemExit(1)
 
     for entry in target_dir.iterdir():
-        click.echo(f"{entry.name:{len(entry.name) + 5}}", nl=False)
+        if entry.suffix.lower() == '.pdf':
+            click.echo(f"{entry.stem}", nl=True)
+
     click.echo()
 
     find_count=get_pdf_from_path(location, recursive, filename)
-    print(f"Search {find_count} PDF file in {location}.")
-    print(f"Ouptput result in {filename}")
+    #print(f"Search {find_count} PDF file in {location}.")
+    click.echo(f"Search {find_count} PDF file in {location}.", nl=True)
+    #print(f"Ouptput result in {filename}")
+    click.echo(f"Ouptput result in {filename}", nl=True)
 
 if __name__ == '__main__':
     main()
