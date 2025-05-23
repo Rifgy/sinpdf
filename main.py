@@ -14,26 +14,9 @@ def get_pdf_from_path(path_to_scan, recursive, filename):
     return pth
 
 @click.command(help="Scan *.pdf file in LOCATION and output result in file.")
-#@click.argument('location')
-@click.argument(
-    "location",
-    type=click.Path(
-        exists=True,
-        file_okay=False,
-        readable=True,
-        path_type=Path,
-    ),
-)
-@click.option(
-    '--recursive', '-r', is_flag=True,
-    help = 'Scan subfolder in LOCATION',
-)
-@click.option(
-    '--filename', '-f',
-    prompt='Out filename',
-    default=OUT_FILE,
-    help='Filename for output scan result.',
-)
+@click.argument("location",type=click.Path(exists=True, file_okay=False,readable=True, path_type=Path, ), )
+@click.option('--recursive', '-r', is_flag=True, help = 'Scan subfolder in LOCATION',)
+@click.option('--filename', '-f', prompt='Output filename', default=OUT_FILE, help='Filename for output scan result.', )
 @click.version_option("0.1.0", prog_name="sinpdf")
 def main(location, recursive, filename):
     """
