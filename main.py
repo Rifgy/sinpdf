@@ -7,9 +7,9 @@ OUT_FILE="out.txt"
 def get_pdf_from_path(path_to_scan, recursive, filename):
     pth=path_to_scan
     if recursive:
-        print("Scan with recursive...")
+        print("Scan WITH recursive...")
     else:
-        print("Scan without recursive...")
+        print("Scan WITHOUY recursive...")
 
     return pth
 
