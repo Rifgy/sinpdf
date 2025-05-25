@@ -1,11 +1,12 @@
 import sys
 from PyQt5 import QtWidgets
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
 
-from sqlalchemy import create_engine, Column, Integer, String, Sequence
+from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
 
-BASE_NAME='books.db'
+BASE_NAME='results.db'
 
 reg = registry()
 # declarative base class
@@ -13,11 +14,27 @@ Base = reg.generate_base()
 
 # Определяем модель книги
 class ResultBase(Base):
-    __tablename__ = 'books'
-    id = Column(Integer, Sequence('book_id_seq'), primary_key=True)
-    title = Column(String(50))
+    __tablename__ = 'results'
+    id = Column(Integer, Sequence('result_id_seq'), primary_key=True)
+    hoctname = Column(String(30))
+    fullpath = Column(String(255))
+    pagecount = Column(Integer)
+    doctext = Column(TEXT)
+    creationdate = Column(DateTime)
+    moddate = Column(DateTime)
+    creator = Column(String(50))
+    producer = Column(String(50))
     author = Column(String(50))
 
+'''
+file_metadata = {
+    'ModDate': "D:20240209071733+03'00'",
+    'Producer': 'Aspose.Words for .NET 19.3',
+    'Author': 'Ларцева Галина Павловна',
+    'Creator': 'Microsoft Office Word',
+    'CreationDate': 'D:20240117010500Z'
+}
+'''
 
 # Создаем базу данных SQLite
 engine = create_engine('sqlite:///'+BASE_NAME)
@@ -36,7 +53,8 @@ class SinPdfApp(QtWidgets.QWidget):
 
     def initUI(self):
         self.setWindowTitle('Search in PDF')
-
+        #set font
+        self.setFont(QFont('SansSerif',12))
         # Создаем элементы интерфейса
         self.path_to_scan = QtWidgets.QLineEdit(self)
         self.path_to_scan.setPlaceholderText('Path to scan')
@@ -71,16 +89,16 @@ class SinPdfApp(QtWidgets.QWidget):
 
     def load_books(self):
         self.results_list.clear()
-        books = session.query(ResultBase).all()
-        for book in books:
-            self.results_list.addItem(f"{book.title} by {book.author}")
+        list = session.query(ResultBase).all()
+        for item in list:
+            self.results_list.addItem(f"{item.doctext} by {item.author}")
 
     def add_book(self):
         title = self.path_to_scan.text()
         author = self.text_to_search.text()
 
         if title and author:
-            new_book = ResultBase(title=title, author=author)
+            new_book = ResultBase(doctext=title, author=author)
             session.add(new_book)
             session.commit()
             self.load_books()
