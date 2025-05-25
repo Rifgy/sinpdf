@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
 
+__version__ = "0.1"
+
 BASE_NAME='results.db'
 
 reg = registry()
@@ -59,23 +61,22 @@ class SinPdfApp(QtWidgets.QWidget):
         self.path_to_scan.setPlaceholderText('Path to scan')
         self.text_to_search = QtWidgets.QLineEdit(self)
         self.text_to_search.setPlaceholderText('Text to search')
-
         self.get_path_button = QtWidgets.QPushButton('...', self)
         self.get_path_button.setToolTip('Select path to scan')
         self.get_path_button.resize(self.get_path_button.sizeHint())
         self.get_path_button.clicked.connect(self.add_book)
-
         self.results_list = QtWidgets.QListWidget(self)
 
         # Устанавливаем компоновку
-        layout = QtWidgets.QVBoxLayout()
-        layout.addWidget(self.path_to_scan)
-        #layout.addWidget(self.get_path_button)
-        layout.addWidget(self.text_to_search)
-        layout.addWidget(self.get_path_button)
-        layout.addWidget(self.results_list)
+        vlay = QtWidgets.QVBoxLayout()
+        hlay = QtWidgets.QHBoxLayout()
 
-        self.setLayout(layout)
+        hlay.addWidget(self.path_to_scan)
+        hlay.addWidget(self.get_path_button)
+        vlay.addLayout(hlay)
+        vlay.addWidget(self.text_to_search)
+        vlay.addWidget(self.results_list)
+        self.setLayout(vlay)
 
         self.resize(700,400)
         self.to_center()
@@ -112,6 +113,5 @@ class SinPdfApp(QtWidgets.QWidget):
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     ex = SinPdfApp()
-
     ex.show()
     sys.exit(app.exec_())
