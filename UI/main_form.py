@@ -44,7 +44,6 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-
 # основной класс приложения
 class SinPdfApp(QtWidgets.QWidget):
     def __init__(self):
@@ -63,6 +62,7 @@ class SinPdfApp(QtWidgets.QWidget):
 
         self.get_path_button = QtWidgets.QPushButton('...', self)
         self.get_path_button.setToolTip('Select path to scan')
+        self.get_path_button.resize(self.get_path_button.sizeHint())
         self.get_path_button.clicked.connect(self.add_book)
 
         self.results_list = QtWidgets.QListWidget(self)
@@ -70,6 +70,7 @@ class SinPdfApp(QtWidgets.QWidget):
         # Устанавливаем компоновку
         layout = QtWidgets.QVBoxLayout()
         layout.addWidget(self.path_to_scan)
+        #layout.addWidget(self.get_path_button)
         layout.addWidget(self.text_to_search)
         layout.addWidget(self.get_path_button)
         layout.addWidget(self.results_list)
