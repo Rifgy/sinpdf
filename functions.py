@@ -18,6 +18,10 @@ def parse_meta_data():
 def get_pdf_meta(path):
     try:
         meta = pdfplumber.open(path).metadata
+        if not meta['Author']:
+            meta['Author']=''
+            if not meta['Creator']:
+                meta['Creator'] = ''
         return meta
     except Exception as e:
         if __name__ == "__main__":
