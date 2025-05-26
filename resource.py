@@ -21,7 +21,7 @@ about_msg = """
     gnu.org/licenses/</a>
     </p>
 """
-select_folder = "Выберите папку"
+select_folder = ("Select folder to find PDF files")
 chanel_not_valid = "Неверное имя канала"
 selected_not_valid = "Не выбраны элементы для загрузки"
 apply_text = "Будет начато копирование выбранных медиа файлов в указанный канал"

@@ -1,15 +1,16 @@
-
 import sys
-import os
 import datetime
+
+from pathlib import Path
 
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QDesktopWidget, QMessageBox, QStatusBar
+from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
 
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
 
+from functions import get_local_hostname, get_pdf_meta
 from resource import MSG
 
 __version__ = "0.1"
@@ -26,6 +27,7 @@ class ResultBase(Base):
     id = Column(Integer, Sequence('result_id_seq'), primary_key=True)
     hoctname = Column(String(30))
     docname = Column(String(255))
+    uripath = Column(String(255))
     fullpath = Column(String(255))
     pagecount = Column(Integer)
     doctext = Column(TEXT)
@@ -106,36 +108,45 @@ class SinPdfApp(QtWidgets.QWidget):
         self.results_list.clear()
         list = session.query(ResultBase).all()
         for item in list:
-            #self.results_list.addItem(f"{item.doctext} by {item.author}")
-            self.results_list.addItem((f"{item.hoctname} : {item.fullpath}"))
+            self.results_list.addItem((f"{item.hoctname} - {item.docname}"))
 
     def get_files_from_path(self):
-        '''
-        # очистить, если в списке уже есть элементы
-        self.listWidget.clear()
-        self.txtSource.clear()
+        self.path_to_scan.clear()
+        #home = os.getenv("HOME")
         directory = QtWidgets.QFileDialog.getExistingDirectory(
-            self, MSG['selectFolder'])
-        self.txtSource.setText(directory)
-        self.txtSource.setCursorPosition(0)
-        # диалог выбора директории -> установить значение переменной
-        # в путь выбранной директории
-        # не продолжать выполнение, если пользователь не выбрал директорию
+            self,
+            MSG['selectFolder'],
+            None,
+            QtWidgets.QFileDialog.ShowDirsOnly
+        )
+
         if directory:
-            # для каждого файла в директории
-            for file_name in os.listdir(directory):
-                # добавить файл в dirListWidget
-                self.listWidget.addItem(file_name)
-        '''
-        host_name = self.path_to_scan.text()
-        full_path = self.text_to_search.text()
-        if host_name and full_path:
-            new_result = ResultBase(hoctname=host_name, fullpath=full_path)
-            session.add(new_result)
-            session.commit()
-            self.load_last_result()
-            self.path_to_scan.clear()
-            self.text_to_search.clear()
+            target_dir = Path(directory)
+            self.path_to_scan.setText(directory)
+            self.path_to_scan.setCursorPosition(0)
+
+            host_name = get_local_hostname()
+
+            for entry in target_dir.iterdir():
+                if entry.suffix.lower() == '.pdf':
+                    meta = get_pdf_meta(entry)
+                    new_result = ResultBase(
+                        hoctname=host_name,
+                        docname=entry.name,
+                        uripath=entry.as_uri(),
+                        fullpath=entry.as_posix(),
+                        pagecount=0,
+                        doctext='',
+                        creationdate=datetime.datetime.now(), #meta['CreationDate'],
+                        moddate=datetime.datetime.now(), #meta['ModDate'],
+                        creator=meta['Creator'],
+                        producer=meta['Producer'],
+                        author=meta['Author']
+                    )
+
+                    session.add(new_result)
+                    session.commit()
+                    self.load_last_result()
         else:
             QMessageBox.warning(self, 'Input Error', 'Please enter both title and author!')
 
