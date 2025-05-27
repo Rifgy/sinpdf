@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
 
-from functions import get_local_hostname, get_pdf_meta, get_pdf_text
+from functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_with_default_app
 from resource import MSG
 
 #debug: Module pdfminer errors
@@ -75,6 +75,7 @@ class SinPdfApp(QtWidgets.QWidget):
         self.get_help.resize(self.get_help.sizeHint())
         self.get_help.clicked.connect(self.get_about)
         self.results_list = QtWidgets.QListWidget(self)
+        self.results_list.doubleClicked.connect(self.resultitem_doubleclick)
 
         # Install the layout
         vlay = QtWidgets.QVBoxLayout()
@@ -109,11 +110,19 @@ class SinPdfApp(QtWidgets.QWidget):
         now = datetime.datetime.now()
         QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
 
+    def resultitem_doubleclick(self):
+        doc = self.results_list.currentItem().text()
+        res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
+        print(res.fullpath)
+        open_with_default_app(res.fullpath)
+
+
     def load_last_result(self, filter):
         self.results_list.clear()
         list = session.query(ResultBase).all()
         for item in list:
-            self.results_list.addItem((f"{item.hoctname} - {item.docname}"))
+            #self.results_list.addItem((f"{item.hoctname} - {item.docname}"))
+            self.results_list.addItem((f"{item.docname}"))
 
     def get_files_from_path(self):
         self.path_to_scan.clear()
@@ -160,7 +169,6 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     # set font for all app widget
     app.setFont(QFont('SansSerif',12))
-
     ex = SinPdfApp()
     ex.show()
     sys.exit(app.exec_())

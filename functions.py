@@ -1,5 +1,10 @@
 import socket
 import datetime
+
+import os
+import sys
+import subprocess
+
 import pdfplumber
 
 def get_local_hostname():
@@ -96,6 +101,14 @@ def get_pdf_text(path:str, getpages:int):
             return f"Error when receiving the metadata of the PDF-file: {e}"
         else:
             return f'Failed to get text...'
+
+def open_with_default_app(file_path):
+    if sys.platform.startswith('win'):
+        os.startfile(file_path)
+    elif sys.platform == 'darwin':
+        subprocess.call(['open', file_path])
+    else:  # For Linux and others
+        subprocess.call(['xdg-open', file_path])
 
 if __name__ == "__main__":
     #print(f"Local host name: {get_local_hostname()}")
