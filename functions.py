@@ -51,9 +51,9 @@ def get_pdf_meta(path:str):
             PageCount=len(pdf.pages)
         )
         #debug
-        print(f"meta :\n {meta}")
+        #print(f"meta :\n {meta}")
         meta_pdf = pdf.metadata
-        print(f"meta_pdf :\n {meta_pdf}")
+        #print(f"meta_pdf :\n {meta_pdf}")
 
         if meta_pdf:
             meta.update(meta_pdf)
