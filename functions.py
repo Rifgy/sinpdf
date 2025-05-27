@@ -28,7 +28,7 @@ def parse_meta_datatime(dtsting:str):
     :return: convert to datatime string or current datetime
     """
     if dtsting:
-        dt = (dtsting.split(':')[1]).split('+')[0]
+        dt = (dtsting.split(':')[1])[:14]
         return datetime.datetime.strptime(dt, '%Y%m%d%H%M%S')
     else:
         return datetime.datetime.now()
@@ -39,7 +39,7 @@ def get_pdf_meta(path:str):
 
     :rtype: dict[str, str | int] | str
     :param path: 
-    :return: 
+    :return:
     """
     with pdfplumber.open(path) as pdf:
         meta = dict(
@@ -88,13 +88,13 @@ def get_pdf_text(path:str):
 
 if __name__ == "__main__":
     #print(f"Local host name: {get_local_hostname()}")
-    '''
+
     CreationDate = "D:20120320133836+08'00'"
     ModDate = "D:20120327142152+08'00'"
     print(parse_meta_datatime(CreationDate))
     print(parse_meta_datatime(ModDate))
     print(parse_meta_datatime(''))
-    '''
+
 
     pfile = 'data/APC_Delta_manual.pdf'
     print(f"meta othe func :\n {get_pdf_meta(pfile)}")
