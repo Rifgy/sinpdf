@@ -64,16 +64,22 @@ class SinPdfApp(QtWidgets.QWidget):
         # create UI elements
         self.path_to_scan = QtWidgets.QLineEdit(self)
         self.path_to_scan.setPlaceholderText('Path to scan')
+
         self.text_to_search = QtWidgets.QLineEdit(self)
         self.text_to_search.setPlaceholderText('Text to search')
+        self.text_to_search.textChanged.connect(self.on_search_text_chandge)
+        self.text_to_search.returnPressed.connect(self.on_search_enter)
+
         self.get_path_button = QtWidgets.QPushButton('...', self)
         self.get_path_button.setToolTip('Select path to scan')
         self.get_path_button.resize(self.get_path_button.sizeHint())
         self.get_path_button.clicked.connect(self.get_files_from_path)
+
         self.get_help = QtWidgets.QPushButton('?', self)
         self.get_help.setToolTip('About...')
         self.get_help.resize(self.get_help.sizeHint())
         self.get_help.clicked.connect(self.get_about)
+
         self.results_list = QtWidgets.QListWidget(self)
         self.results_list.doubleClicked.connect(self.resultitem_doubleclick)
 
@@ -113,15 +119,26 @@ class SinPdfApp(QtWidgets.QWidget):
     def resultitem_doubleclick(self):
         doc = self.results_list.currentItem().text()
         res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
-        print(res.fullpath)
         open_with_default_app(res.fullpath)
 
+    def on_search_text_chandge(self):
+        search_str = self.text_to_search.text()
+        self.load_last_result(search_str)
+        print(self.text_to_search.text())
 
-    def load_last_result(self, filter):
+    def on_search_enter(self):
+        search_str = self.text_to_search.text()
+        print(self.text_to_search.text())
+        self.load_last_result(search_str)
+
+    def load_last_result(self, search_filter):
         self.results_list.clear()
-        list = session.query(ResultBase).all()
+        if search_filter:
+            list = session.query(ResultBase).filter(ResultBase.doctext.like(f"%{search_filter}%")).all()
+        else:
+            list = session.query(ResultBase).all()
+
         for item in list:
-            #self.results_list.addItem((f"{item.hoctname} - {item.docname}"))
             self.results_list.addItem((f"{item.docname}"))
 
     def get_files_from_path(self):
