@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
 
-from functions import get_local_hostname, get_pdf_meta
+from functions import get_local_hostname, get_pdf_meta, get_pdf_text
 from resource import MSG
 
 __version__ = "0.1"
@@ -92,7 +92,7 @@ class SinPdfApp(QtWidgets.QWidget):
         self.resize(700,400)
         self.to_center()
 
-        self.load_last_result()
+        self.load_last_result('')
 
     def to_center(self):
         qr = self.frameGeometry()
@@ -104,7 +104,7 @@ class SinPdfApp(QtWidgets.QWidget):
         now = datetime.datetime.now()
         QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
 
-    def load_last_result(self):
+    def load_last_result(self, filter):
         self.results_list.clear()
         list = session.query(ResultBase).all()
         for item in list:
@@ -130,23 +130,23 @@ class SinPdfApp(QtWidgets.QWidget):
             for entry in target_dir.iterdir():
                 if entry.suffix.lower() == '.pdf':
                     meta = get_pdf_meta(entry)
+                    text = get_pdf_text(entry)
                     new_result = ResultBase(
                         hoctname=host_name,
                         docname=entry.name,
                         uripath=entry.as_uri(),
                         fullpath=entry.as_posix(),
-                        pagecount=0,
-                        doctext='',
-                        creationdate=datetime.datetime.now(), #meta['CreationDate'],
-                        moddate=datetime.datetime.now(), #meta['ModDate'],
+                        pagecount=meta['PageCount'],
+                        doctext=text,
+                        creationdate=meta['CreationDate'],
+                        moddate=meta['ModDate'],
                         creator=meta['Creator'],
                         producer=meta['Producer'],
                         author=meta['Author']
                     )
-
                     session.add(new_result)
                     session.commit()
-                    self.load_last_result()
+                    self.load_last_result('')
         else:
             QMessageBox.warning(self, 'Input Error', 'Please enter both title and author!')
 
