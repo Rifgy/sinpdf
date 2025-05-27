@@ -1,6 +1,6 @@
 # SinPdf 
 ____
-Small proggram for dcan PDF files massive and fast search text in result.
+Small program for dcan PDF files massive and fast search text in result.
 
 _For me and for my friends..._
 
