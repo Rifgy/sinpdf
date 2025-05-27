@@ -23,6 +23,7 @@ def get_local_hostname():
 def parse_meta_datatime(dtsting:str):
     """
     Сonvertation of a string "D: 20120320133836+08'00 '" of metadata into the Datatime format
+
     :rtype: datetime
     :param dtsting
     :return: convert to datatime string or current datetime
@@ -62,29 +63,39 @@ def get_pdf_meta(path:str):
             return meta
         else:
             if __name__ == "__main__":
-                return f"No metadata in PDF-file."
+                return "No metadata in PDF-file."
             else:
                 return meta
 
-def get_pdf_text(path:str):
+def get_pdf_text(path:str, getpages:int):
     """
     Return PDF content in text mode format's
-    :rtype: str | Any
-    :param path: 
-    :return: PDF text
+
+    :param path: Path to PDF file
+    :param getpages: The number of pages in the PDF file to save
+    :return: Content PDF-file in TEXT format
+
     """
     try:
         with pdfplumber.open(path) as pdf:
             text = ''
             for page in pdf.pages:
                 # text extract
-                text += page.extract_text()
+                text += page.extract_text(layout=True)
+
+                # debug: болле быстрый, но более тупой
+                #text += page.extract_text_simple()
+                #debug: close curent page
+                #page.close()
+
+                if page.page_number >getpages:
+                    break
         return text
     except Exception as e:
         if __name__ == "__main__":
             return f"Error when receiving the metadata of the PDF-file: {e}"
         else:
-            return f'Failed to get ...'
+            return f'Failed to get text...'
 
 if __name__ == "__main__":
     #print(f"Local host name: {get_local_hostname()}")

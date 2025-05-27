@@ -13,9 +13,14 @@ from sqlalchemy.orm import sessionmaker, registry
 from functions import get_local_hostname, get_pdf_meta, get_pdf_text
 from resource import MSG
 
+#debug: Module pdfminer errors
+import logging
+logging.getLogger('pdfminer').setLevel(logging.ERROR)
+
 __version__ = "0.1"
 
 BASE_NAME='results.db'
+PAGE_TO_LOAD=3
 
 reg = registry()
 # declarative base class
@@ -130,7 +135,7 @@ class SinPdfApp(QtWidgets.QWidget):
             for entry in target_dir.iterdir():
                 if entry.suffix.lower() == '.pdf':
                     meta = get_pdf_meta(entry)
-                    text = get_pdf_text(entry)
+                    text = get_pdf_text(entry, PAGE_TO_LOAD)
                     new_result = ResultBase(
                         hoctname=host_name,
                         docname=entry.name,
