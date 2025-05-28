@@ -1,5 +1,5 @@
 import sys
-import datetime
+from datetime import datetime as dt
 
 from pathlib import Path
 
@@ -10,17 +10,19 @@ from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
 
-from src.sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_with_default_app
+from src.sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_file_with_default
 from src.sinpdf.resource import MSG
+#from src.sinpdf.config import config_read, FntName, FntSize, BdName, write_config_file
 
 #debug: Module pdfminer errors
 import logging
 logging.getLogger('pdfminer').setLevel(logging.ERROR)
 
-__version__ = "0.1"
-
-BASE_NAME='results.db'
-PAGE_TO_LOAD=3
+#config = config_read()
+#BASE_NAME = config['Database']['BaseName']
+#PAGE_TO_LOAD = config['Database'].getint('PageToDbLoad')
+BASE_NAME = 'results.db'
+PAGE_TO_LOAD = 3
 
 reg = registry()
 # declarative base class
@@ -42,15 +44,15 @@ class ResultBase(Base):
     producer = Column(String(50))
     author = Column(String(50))
 
-# Создаем базу данных SQLite
-engine = create_engine('sqlite:///'+BASE_NAME)
+# Create SQLite bd
+engine = create_engine('sqlite:///src/sinpdf/'+BASE_NAME)
 Base.metadata.create_all(engine)
 
-# Создаем сессию
+# Create session
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# основной класс приложения
+# App main class
 class SinPdfApp(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
@@ -101,10 +103,9 @@ class SinPdfApp(QtWidgets.QWidget):
         self.setTabOrder(self.get_path_button, self.text_to_search)
         self.setTabOrder(self.text_to_search,self.results_list)
 
-        # resize & move form to center
+        # resize, move form to center, and load data from db to results_list
         self.resize(700,400)
         self.to_center()
-
         self.load_last_result('')
 
     def to_center(self):
@@ -114,13 +115,13 @@ class SinPdfApp(QtWidgets.QWidget):
         self.move(qr.topLeft())
 
     def on_get_help_click(self):
-        now = datetime.datetime.now()
+        now = dt.now()
         QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
 
     def on_resultitem_doubleclick(self):
         doc = self.results_list.currentItem().text()
         res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
-        open_with_default_app(res.fullpath)
+        open_file_with_default(res.fullpath)
 
     def on_search_text_chandge(self):
         search_str = self.text_to_search.text()

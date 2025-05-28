@@ -1,10 +1,6 @@
-import socket
-import datetime
+import os, sys, subprocess, datetime, socket
 
-import os
-import sys
-import subprocess
-
+import configparser
 import pdfplumber
 
 def get_local_hostname():
@@ -102,7 +98,12 @@ def get_pdf_text(path:str, getpages:int):
         else:
             return f'Failed to get text...'
 
-def open_with_default_app(file_path):
+def open_file_with_default(file_path):
+    """
+
+    :rtype: None
+    :param file_path:
+    """
     if sys.platform.startswith('win'):
         os.startfile(file_path)
     elif sys.platform == 'darwin':
@@ -111,14 +112,4 @@ def open_with_default_app(file_path):
         subprocess.call(['xdg-open', file_path])
 
 if __name__ == "__main__":
-    #print(f"Local host name: {get_local_hostname()}")
-
-    CreationDate = "D:20120320133836+08'00'"
-    ModDate = "D:20120327142152+08'00'"
-    print(parse_meta_datatime(CreationDate))
-    print(parse_meta_datatime(ModDate))
-    print(parse_meta_datatime(''))
-
-
-    pfile = 'data/APC_Delta_manual.pdf'
-    print(f"meta othe func :\n {get_pdf_meta(pfile)}")
+    pass
