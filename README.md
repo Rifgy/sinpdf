@@ -1,8 +1,10 @@
 # SinPdf 
 ____
+Search in PDF-files
+
 Small program for scan PDF files massive and fast search text in result.
 
-_For me and for my friends..._
+_For me and my friends..._
 
 ____
 * UI
