@@ -78,10 +78,11 @@ class SinPdfApp(QtWidgets.QWidget):
         self.get_help = QtWidgets.QPushButton('?', self)
         self.get_help.setToolTip('About...')
         self.get_help.resize(self.get_help.sizeHint())
-        self.get_help.clicked.connect(self.get_about)
+        self.get_help.clicked.connect(self.on_get_help_click)
 
         self.results_list = QtWidgets.QListWidget(self)
-        self.results_list.doubleClicked.connect(self.resultitem_doubleclick)
+        self.results_list.setToolTip('Double click to open file')
+        self.results_list.doubleClicked.connect(self.on_resultitem_doubleclick)
 
         # Install the layout
         vlay = QtWidgets.QVBoxLayout()
@@ -112,11 +113,11 @@ class SinPdfApp(QtWidgets.QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def get_about(self):
+    def on_get_help_click(self):
         now = datetime.datetime.now()
         QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
 
-    def resultitem_doubleclick(self):
+    def on_resultitem_doubleclick(self):
         doc = self.results_list.currentItem().text()
         res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
         open_with_default_app(res.fullpath)
@@ -134,31 +135,28 @@ class SinPdfApp(QtWidgets.QWidget):
     def load_last_result(self, search_filter):
         self.results_list.clear()
         if search_filter:
-            list = session.query(ResultBase).filter(ResultBase.doctext.like(f"%{search_filter}%")).all()
+            list_result = session.query(ResultBase).filter(ResultBase.doctext.like(f"%{search_filter}%")).all()
         else:
-            list = session.query(ResultBase).all()
+            list_result = session.query(ResultBase).all()
 
-        for item in list:
-            self.results_list.addItem((f"{item.docname}"))
+        for item in list_result:
+            self.results_list.addItem(f"{item.docname}")
 
     def get_files_from_path(self):
         self.path_to_scan.clear()
         #home = os.getenv("HOME")
         directory = QtWidgets.QFileDialog.getExistingDirectory(
-            self,
-            MSG['selectFolder'],
-            None,
-            QtWidgets.QFileDialog.ShowDirsOnly
+            self, MSG['selectFolder'],None, QtWidgets.QFileDialog.ShowDirsOnly
         )
 
         if directory:
-            target_dir = Path(directory)
             self.path_to_scan.setText(directory)
             self.path_to_scan.setCursorPosition(0)
-
             host_name = get_local_hostname()
 
-            for entry in target_dir.iterdir():
+            target_dir = Path(directory)
+
+            for entry in target_dir.rglob('*'):      #target_dir.iterdir()
                 if entry.suffix.lower() == '.pdf':
                     meta = get_pdf_meta(entry)
                     text = get_pdf_text(entry, PAGE_TO_LOAD)
@@ -179,7 +177,7 @@ class SinPdfApp(QtWidgets.QWidget):
                     session.commit()
                     self.load_last_result('')
         else:
-            QMessageBox.warning(self, 'Input Error', 'Please enter both title and author!')
+            QMessageBox.warning(self, 'Input Error', 'Please select directory whit file\'s')
 
 # start app
 if __name__ == '__main__':
