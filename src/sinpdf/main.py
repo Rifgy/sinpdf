@@ -10,8 +10,8 @@ from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
 
-from functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_with_default_app
-from resource import MSG
+from src.sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_with_default_app
+from src.sinpdf.resource import MSG
 
 #debug: Module pdfminer errors
 import logging
