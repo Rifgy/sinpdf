@@ -5,7 +5,7 @@ from pathlib import Path
 
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
+from PyQt5.QtWidgets import QDesktopWidget, QMessageBox, QSplashScreen
 
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
