@@ -12,7 +12,7 @@ from sqlalchemy.orm import sessionmaker, registry
 
 from src.sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_file_with_default
 from src.sinpdf.resource import MSG
-#from src.sinpdf.config import config_read, FntName, FntSize, BdName, write_config_file
+
 
 #debug: Module pdfminer errors
 import logging
@@ -20,9 +20,6 @@ logging.getLogger('pdfminer').setLevel(logging.ERROR)
 
 __version__ = "0.1"
 
-#config = config_read()
-#BASE_NAME = config['Database']['BaseName']
-#PAGE_TO_LOAD = config['Database'].getint('PageToDbLoad')
 BASE_NAME = 'results.db'
 PAGE_TO_LOAD = 3
 
