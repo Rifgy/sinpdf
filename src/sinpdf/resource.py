@@ -3,7 +3,7 @@ about_msg = """
     <p>Вы можете скачать последнюю версию здесь:</p>
     <p><a href="https://github.com/Rifgy/sinpdf/tree/master">
     https://github.com/Rifgy/sinpdf/tree/master</a></p>
-    <p>Copyright &copy; 2025-{year}, Find O'Man</p>
+    <p>Copyright &copy; 2025-{year}, Rifgy</p>
     <p>Эта программа является свободным программным обеспечением:
     вы можете распространять ее и/или изменять в соответствии с
     условиями GNU General Public License (GNU GPL), опубликованной
@@ -21,25 +21,9 @@ about_msg = """
     gnu.org/licenses/</a>
     </p>
 """
-select_folder = ("Select folder to find PDF files")
-chanel_not_valid = "Неверное имя канала"
-selected_not_valid = "Не выбраны элементы для загрузки"
-apply_text = "Будет начато копирование выбранных медиа файлов в указанный канал"
-apply_text_details = "Чтобы посмотреть детали нажмите 'Show Details...'"
-new_chanel = "Новый канал: "
-exist_chanel = "Канал: "
-selected = "Выбрано: "
 
 help_msg = ""
 MSG = {
     'help': help_msg,
     'about': about_msg,
-    'selectFolder': select_folder,
-    'notValidChanel': chanel_not_valid,
-    'notValidSelect': selected_not_valid,
-    'applyDialogtxt': apply_text,
-    'applyDialogDetails': apply_text_details,
-    'chanelNew': new_chanel,
-    'chanelExist': exist_chanel,
-    'selected': selected,
 }

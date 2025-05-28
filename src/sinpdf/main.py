@@ -145,7 +145,7 @@ class SinPdfApp(QtWidgets.QWidget):
         self.path_to_scan.clear()
         #home = os.getenv("HOME")
         directory = QtWidgets.QFileDialog.getExistingDirectory(
-            self, MSG['selectFolder'],None, QtWidgets.QFileDialog.ShowDirsOnly
+            self, "Select folder to find PDF files",None, QtWidgets.QFileDialog.ShowDirsOnly
         )
 
         if directory:
