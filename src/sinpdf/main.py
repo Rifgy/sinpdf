@@ -126,7 +126,6 @@ class SinPdfApp(QtWidgets.QWidget):
     def on_search_text_chandge(self):
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
-        print(self.text_to_search.text())
 
     def on_search_enter(self):
         search_str = self.text_to_search.text()
