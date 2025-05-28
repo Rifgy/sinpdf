@@ -18,6 +18,8 @@ from src.sinpdf.resource import MSG
 import logging
 logging.getLogger('pdfminer').setLevel(logging.ERROR)
 
+__version__ = "0.1"
+
 #config = config_read()
 #BASE_NAME = config['Database']['BaseName']
 #PAGE_TO_LOAD = config['Database'].getint('PageToDbLoad')
