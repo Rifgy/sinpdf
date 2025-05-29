@@ -5,14 +5,13 @@ from pathlib import Path
 
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QDesktopWidget, QMessageBox, QSplashScreen
+from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
 
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
 
-from src.sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_file_with_default
-from src.sinpdf.resource import MSG
-
+from sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_file_with_default
+from sinpdf.resource import MSG
 
 #debug: Module pdfminer errors
 import logging
@@ -44,7 +43,7 @@ class ResultBase(Base):
     author = Column(String(50))
 
 # Create SQLite bd
-engine = create_engine('sqlite:///src/sinpdf/'+BASE_NAME)
+engine = create_engine('sqlite:///sinpdf/'+BASE_NAME)
 Base.metadata.create_all(engine)
 
 # Create session
