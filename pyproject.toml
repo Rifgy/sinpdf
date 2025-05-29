@@ -1,6 +1,6 @@
 [project]
 name = "sinpdf"
-version = "0.1"
+version = "0.3"
 readme = "README.md"
 authors = [
     { name = "Rifgy", email = "z-ybr@mail.ru" }
