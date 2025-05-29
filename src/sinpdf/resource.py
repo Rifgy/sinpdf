@@ -27,3 +27,6 @@ MSG = {
     'help': help_msg,
     'about': about_msg,
 }
+
+if __name__ == "__main__":
+    pass
