@@ -15,8 +15,8 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     #packages=['sinpdf'],
-    package_dir = {"": "src"},
-    packages = find_packages(where="src"),
+    package_dir = {"": "sinpdf"},
+    packages = find_packages(where="sinpdf"),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
