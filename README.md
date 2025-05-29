@@ -43,5 +43,5 @@ API-Key = {INSERT YOUR API-KEY}
 - Enhancing tag organization and developing hierarchical information through the application of clustering algorithms on a vector database
 
 ### License:
-#### MIT
+#### MIT License
 
