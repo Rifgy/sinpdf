@@ -1,0 +1,14 @@
+[project]
+name = "sinpdf"
+version = "0.1"
+description = "Small program for scan PDF files massive and fast search text in result."
+readme = "README.md"
+authors = [
+    { name = "Rifgy", email = "z-ybr@mail.ru" }
+]
+requires-python = "==3.11.*"
+dependencies = ['PyQt5>=5.15.11', 'SQLAlchemy>=2.0.41', 'pdfplumber>=0.11.6']
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
