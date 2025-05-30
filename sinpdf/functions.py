@@ -22,10 +22,6 @@ def get_local_hostname():
         else:
             return f'error: {e}'
 
-
-
-
-
 def get_pdf_meta(path: Path, get_meta: bool):
     """
     Return dict with PDF-metadata
@@ -38,7 +34,6 @@ def get_pdf_meta(path: Path, get_meta: bool):
 
     meta = dict(Creator='', Producer='', Author='', CreationDate='', ModDate='', PageCount=0)
 
-
     with pdfplumber.open(path) as pdf:
         print(f"path:{path}")
         meta['PageCount'] = len(pdf.pages)
@@ -47,10 +42,6 @@ def get_pdf_meta(path: Path, get_meta: bool):
             meta_pdf = pdf.metadata
             if meta_pdf:
                 meta.update(meta_pdf)
-                if meta_pdf['CreationDate']:
-                    meta['CreationDate'] = parse_meta_datatime(meta['CreationDate'])
-                if meta_pdf['ModDate']:
-                    meta['ModDate'] = parse_meta_datatime(meta['ModDate'])
     return meta
 
 
@@ -100,10 +91,6 @@ def open_file_with_default(file_path):
 
 
 if __name__ == "__main__":
-    dtsting = "D:20240219163433+10'00'"
-    de = parse_meta_datatime(dtsting)
-    print(f"de:{de}, type(de):{type(de)}")
-
     ph = "/home/usver/CODI/_TEST_DATA_/test_data/ХФ ПМ УК 2023/ПМУК-2_02-019_от_10.03.2023_Об_организации_полевых_работ_2023 испр.pdf"
     get_pdf_meta(ph, True)
     pass

@@ -18,7 +18,7 @@ from sinpdf.resource import MSG
 import logging
 logging.getLogger('pdfminer').setLevel(logging.ERROR)
 
-__version__ = "0.1"
+__version__ = "0.0.1"
 
 reg = registry()
 # declarative base class
@@ -34,8 +34,8 @@ class ResultBase(Base):
     fullpath = Column(String(255))
     pagecount = Column(Integer)
     doctext = Column(TEXT)
-    creationdate = Column(DateTime)
-    moddate = Column(DateTime)
+    creationdate = Column(String(30))
+    moddate = Column(String(30))
     creator = Column(String(50))
     producer = Column(String(50))
     author = Column(String(50))
