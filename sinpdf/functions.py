@@ -23,9 +23,6 @@ def get_local_hostname():
             return f'error: {e}'
 
 
-def parse_meta_datatime(dtsting: str):
-    """
-    Сonvertation of a string "D: 20120320133836+08'00 '" of metadata into the Datatime format
 
 
 
