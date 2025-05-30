@@ -1,6 +1,5 @@
 import os, sys, subprocess, datetime, socket
 
-import configparser
 import pdfplumber
 
 def get_local_hostname():
@@ -35,13 +34,14 @@ def parse_meta_datatime(dtsting:str):
     else:
         return datetime.datetime.now()
 
-def get_pdf_meta(path:str):
+def get_pdf_meta(path, get_meta):
     """
     Return dict with PDF-metadata
 
-    :rtype: dict[str, str | int] | str
-    :param path: 
+    :param get_meta:
+    :param path:
     :return:
+    :rtype: dict[str, str | int] | str
     """
     with pdfplumber.open(path) as pdf:
         meta = dict(
@@ -52,21 +52,16 @@ def get_pdf_meta(path:str):
             ModDate='',
             PageCount=len(pdf.pages)
         )
-        #debug
-        #print(f"meta :\n {meta}")
-        meta_pdf = pdf.metadata
-        #print(f"meta_pdf :\n {meta_pdf}")
-
-        if meta_pdf:
-            meta.update(meta_pdf)
-            meta['CreationDate'] = parse_meta_datatime(meta['CreationDate'])
-            meta['ModDate'] = parse_meta_datatime(meta['ModDate'])
-            return meta
-        else:
-            if __name__ == "__main__":
-                return "No metadata in PDF-file."
-            else:
+        if get_meta:
+            meta_pdf = pdf.metadata
+            if meta_pdf:
+                meta.update(meta_pdf)
+                meta['CreationDate'] = parse_meta_datatime(meta['CreationDate'])
+                meta['ModDate'] = parse_meta_datatime(meta['ModDate'])
                 return meta
+        else:
+            return meta
+
 
 def get_pdf_text(path:str, getpages:int):
     """

@@ -12,15 +12,13 @@ from sqlalchemy.orm import sessionmaker, registry
 
 from sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_file_with_default
 from sinpdf.resource import MSG
+from sinpdf.config import APP_FONT, APP_FONTSIZE, BASE_NAME, BASE_PATH, LIMIT_TO_SCAN_PAGE, GET_META_FROM_PDF
 
 #debug: Module pdfminer errors
 import logging
 logging.getLogger('pdfminer').setLevel(logging.ERROR)
 
 __version__ = "0.1"
-
-BASE_NAME = 'results.db'
-PAGE_TO_LOAD = 3
 
 reg = registry()
 # declarative base class
@@ -43,7 +41,7 @@ class ResultBase(Base):
     author = Column(String(50))
 
 # Create SQLite bd
-engine = create_engine('sqlite:///sinpdf/'+BASE_NAME)
+engine = create_engine('sqlite:///'+BASE_NAME)
 Base.metadata.create_all(engine)
 
 # Create session
@@ -156,8 +154,8 @@ class SinPdfApp(QtWidgets.QWidget):
 
             for entry in target_dir.rglob('*'):      #target_dir.iterdir()
                 if entry.suffix.lower() == '.pdf':
-                    meta = get_pdf_meta(entry)
-                    text = get_pdf_text(entry, PAGE_TO_LOAD)
+                    meta = get_pdf_meta(entry, GET_META_FROM_PDF)
+                    text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
                     new_result = ResultBase(
                         hoctname=host_name,
                         docname=entry.name,
@@ -181,7 +179,7 @@ class SinPdfApp(QtWidgets.QWidget):
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     # set font for all app widget
-    app.setFont(QFont('SansSerif',12))
+    app.setFont(QFont(APP_FONT, APP_FONTSIZE))
     ex = SinPdfApp()
     ex.show()
     sys.exit(app.exec_())
