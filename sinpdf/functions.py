@@ -27,17 +27,6 @@ def parse_meta_datatime(dtsting: str):
     """
     Сonvertation of a string "D: 20120320133836+08'00 '" of metadata into the Datatime format
 
-    :rtype: datetime
-    :param dtsting
-    :return: convert to datatime string or current datetime
-    """
-    print(f"dtsting:{dtsting}, type(dtsting):{type(dtsting)}")
-
-    if dtsting:
-        dt = (dtsting.split(':')[1])[:14]
-        return datetime.datetime.strptime(dt, '%Y%m%d%H%M%S')
-    else:
-        return datetime.datetime.now()
 
 
 def get_pdf_meta(path: Path, get_meta: bool):
