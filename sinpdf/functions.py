@@ -37,8 +37,7 @@ def get_pdf_meta(path: Path, get_meta: bool):
     """
 
     meta = dict(Creator='', Producer='', Author='', CreationDate='', ModDate='', PageCount=0)
-    meta = {'Creator' : '', 'Producer' : '', 'Author' : '', 'CreationDate' : '', 'ModDate' : '', 'PageCount' : 0}
-    
+
 
     with pdfplumber.open(path) as pdf:
         print(f"path:{path}")
