@@ -11,8 +11,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, D
 from sqlalchemy.orm import sessionmaker, registry
 
 from sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_file_with_default
-from sinpdf.resource import MSG
 from sinpdf.config import APP_FONT, APP_FONTSIZE, BASE_NAME, BASE_PATH, LIMIT_TO_SCAN_PAGE, GET_META_FROM_PDF
+from sinpdf.resource import MSG
 
 #debug: Module pdfminer errors
 import logging
@@ -41,7 +41,10 @@ class ResultBase(Base):
     author = Column(String(50))
 
 # Create SQLite bd
-engine = create_engine('sqlite:///'+BASE_NAME)
+#engine = create_engine("sqlite:///относительный_путь/database")
+#engine = create_engine("sqlite:////абсолютный_путь/database")
+db_url = 'sqlite:///'+BASE_PATH+BASE_NAME
+engine = create_engine(db_url)
 Base.metadata.create_all(engine)
 
 # Create session
@@ -154,8 +157,11 @@ class SinPdfApp(QtWidgets.QWidget):
 
             for entry in target_dir.rglob('*'):      #target_dir.iterdir()
                 if entry.suffix.lower() == '.pdf':
-                    meta = get_pdf_meta(entry, GET_META_FROM_PDF)
+                    print(f"{entry.name}")
+
                     text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
+                    meta = get_pdf_meta(entry, GET_META_FROM_PDF)
+
                     new_result = ResultBase(
                         hoctname=host_name,
                         docname=entry.name,
@@ -171,9 +177,10 @@ class SinPdfApp(QtWidgets.QWidget):
                     )
                     session.add(new_result)
                     session.commit()
-                    self.load_last_result('')
+
+            self.load_last_result('')
         else:
-            QMessageBox.warning(self, 'Input Error', 'Please select directory whit file\'s')
+            QMessageBox.warning(self, 'Select folder error', 'Please select directory whit file\'s')
 
 # start app
 if __name__ == '__main__':
