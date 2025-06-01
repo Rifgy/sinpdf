@@ -13,31 +13,34 @@ document among the large array of PDF files
 - Python
 - **Future**: OS only (Linux, Windows, MacOS)
 
-### Installation
+### Clone 
  ```shell
-$ pip install git+https://github.com/Uli-Z/autoPDFtagger
+$ git clone https://github.com/Rifgy/sinpdf.git
 ```
 
-Create configuration file and save it to *~/.autoPDFtagger.conf*: 
+Create a configuration file and save it to *~/.config.ini*: 
 ```ini
-; Configuration for autoPDFtagger
+; Configuration for config.ini
+[Default]
+fontname = {CHOISE THE FONT or EMPY}
+fontsize = {CHOISE THE FONT SIZE or EMPY}
 
-[DEFAULT]
-language = {YOUR LANGUAGE}
-
-[OPENAI-API]
-API-Key = {INSERT YOUR API-KEY}
+[ScanOpt]
+basename = {YOUR BASE NAME}
+basepath = {YOUR BASE PATH}
+limittoscanpages = 1
+getmetafrompdf = True
 ```
 ### Usage
 
 ### Code Structure
 
-- `main.py`: main interface for the application.
+- `main.py`     : main interface for the application.
 - `functions.py`: Manages the core functionalities of the tool.
-- `resource.py`: resources.
-- `Future: config.ini`: An example configuration file outlining API key setup and other settings.
+- `resource.py` : resources.
+- `config.ini`  : configuration file.
 
-## Future Development
+### Future Development
 - **Integration and Compatibility**:
   - Ensuring compatibility with applications like paperless-ngx.
 - Enhancing tag organization and developing hierarchical information through the application of clustering algorithms on a vector database
