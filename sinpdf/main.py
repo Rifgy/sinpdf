@@ -5,7 +5,7 @@ from pathlib import Path
 
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QDesktopWidget, QMessageBox, QProgressDialog
+from PyQt5.QtWidgets import QDesktopWidget, QMessageBox, QProgressDialog, QStatusBar
 
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT
 from sqlalchemy.orm import sessionmaker, registry
@@ -52,7 +52,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # App main class
-class SinPdfApp(QtWidgets.QWidget):
+class SinPdfApp(QtWidgets.QWidget): #
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -140,7 +140,6 @@ class SinPdfApp(QtWidgets.QWidget):
             list_result = session.query(ResultBase).filter(ResultBase.doctext.like(f"%{search_filter}%")).all()
         else:
             list_result = session.query(ResultBase).all()
-
         for item in list_result:
             self.results_list.addItem(f"{item.docname}")
 
