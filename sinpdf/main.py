@@ -202,9 +202,12 @@ class SinPdfApp(QtWidgets.QWidget): #
 
 # start app
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    # set font for all app widget
-    app.setFont(QFont(APP_FONT, APP_FONTSIZE))
-    ex = SinPdfApp()
-    ex.show()
-    sys.exit(app.exec_())
+    try:
+        app = QtWidgets.QApplication(sys.argv)
+        # set font for all app widget
+        app.setFont(QFont(APP_FONT, APP_FONTSIZE))
+        ex = SinPdfApp()
+        ex.show()
+        sys.exit(app.exec_())
+    except Exception as e:
+        print(e)
