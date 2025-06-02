@@ -59,12 +59,6 @@ def get_pdf_text(path: Path, getpages: int) -> str :
             for page in pdf.pages:
                 # text extract
                 text += page.extract_text(layout=True)
-
-                # debug: болле быстрый, но более тупой
-                #text += page.extract_text_simple()
-                #debug: close curent page
-                #page.close()
-
                 if page.page_number > getpages:
                     break
         return text
