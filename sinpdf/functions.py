@@ -25,9 +25,8 @@ def get_pdf_meta(path: Path, get_meta: bool) -> dict[str, str | int] | str:
     """
     Return dict with PDF-metadata
 
-    :param path:
-    :param get_meta:
-    :return:
+    :param path: full path to file
+    :param get_meta: get metadata or not
     :rtype: dict[str, str | int] | str
     """
 
