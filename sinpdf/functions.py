@@ -3,7 +3,7 @@ import pdfplumber
 
 from pathlib import Path
 
-def get_local_hostname():
+def get_local_hostname() -> str:
     """
     Get local host name
 
