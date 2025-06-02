@@ -187,6 +187,9 @@ class SinPdfApp(QtWidgets.QWidget):
                 # Обновляем прогресс
                 progress_dialog.setValue(index + 1)
 
+            session.add_all(results_to_add)
+            session.commit()
+
             progress_dialog.close()  # Закрываем диалог после завершения обработки
             self.load_last_result('')
         else:
