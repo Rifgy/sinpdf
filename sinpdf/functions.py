@@ -71,6 +71,7 @@ def get_pdf_text(path: Path, getpages: int) -> str :
 
 def open_file_with_default(file_path: str) -> None:
     """
+    Open file from defaults system app
 
     :rtype: None
     :param file_path:
