@@ -15,12 +15,12 @@ class ConfigReader:
     def create_default_config(self):
         """Создать файл конфигурации с начальными значениями."""
         self.config['Default'] = {
-            'FontName': 'SansSerif',
+            'FontName': 'Arial',
             'FontSize': 12
         }
         self.config['ScanOpt'] = {
             'BaseName': 'result.db',
-            'BasePath': '""',
+            'BasePath': '',
             'LimitToScanPages': 3,
             'GetMetaFromPdf': True
         }
