@@ -74,7 +74,7 @@ def open_file_with_default(file_path: str) -> None:
     Open file from defaults system app
 
     :rtype: None
-    :param file_path:
+    :return: None
     """
     if sys.platform.startswith('win'):
         os.startfile(file_path)
