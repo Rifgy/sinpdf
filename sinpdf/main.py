@@ -60,8 +60,10 @@ class SinPdfApp(QtWidgets.QWidget):
     def initUI(self):
         self.setWindowTitle('Search in PDF')
         self.setMinimumSize(500,200)
-        # set font
-        #self.setFont(QFont('SansSerif',12))
+
+        # create status bar
+        self.status_bar = QtWidgets.QStatusBar()
+
         # create UI elements
         self.path_to_scan = QtWidgets.QLineEdit(self)
         self.path_to_scan.setPlaceholderText('Path to scan')
