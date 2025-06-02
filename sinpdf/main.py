@@ -3,7 +3,7 @@ from datetime import datetime as dt
 
 from pathlib import Path
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QDesktopWidget, QMessageBox, QProgressDialog, QStatusBar
 
