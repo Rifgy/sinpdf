@@ -96,6 +96,7 @@ class SinPdfApp(QtWidgets.QWidget):
         vlay.addLayout(hlay)
         vlay.addLayout(hlay1)
         vlay.addWidget(self.results_list)
+        vlay.addWidget(self.status_bar)  # Добавляем статус-бар в макет
         self.setLayout(vlay)
         # set tab ordering
         self.setTabOrder(self.path_to_scan, self.get_path_button)
