@@ -181,9 +181,9 @@ class SinPdfApp(QtWidgets.QWidget):
                     producer=meta['Producer'],
                     author=meta['Author']
                 )
-                session.add(new_result)
-                session.commit()
-
+                results_to_add.append(new_result)
+                #session.add(new_result)
+                #session.commit()
                 # Обновляем прогресс
                 progress_dialog.setValue(index + 1)
 
