@@ -1,5 +1,4 @@
-import os, sys, subprocess, datetime, socket
-
+import os, sys, subprocess, socket
 import pdfplumber
 
 from pathlib import Path
