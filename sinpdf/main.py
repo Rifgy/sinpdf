@@ -141,6 +141,15 @@ class SinPdfApp(QtWidgets.QWidget):
         for item in list_result:
             self.results_list.addItem(f"{item.docname}")
 
+        # Обновляем статус-бар с количеством найденных результатов
+        self.update_status_bar(len(list_result))
+
+    def update_status_bar(self, count):
+        if count == 0:
+            self.status_bar.showMessage("No results found.")
+        else:
+            self.status_bar.showMessage(f"{count} result(s) found.")
+
     def get_files_from_path(self):
         self.path_to_scan.clear()
         directory = QtWidgets.QFileDialog.getExistingDirectory(
