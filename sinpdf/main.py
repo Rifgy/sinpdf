@@ -120,7 +120,7 @@ class SinPdfApp(QtWidgets.QWidget):
     def on_resultitem_doubleclick(self):
         doc = self.results_list.currentItem().text()
         res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
-        open_file_with_default(res.fullpath)
+        open_file_with_default(str(res.fullpath))
 
     def on_search_text_chandge(self):
         search_str = self.text_to_search.text()
