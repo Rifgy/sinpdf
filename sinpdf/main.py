@@ -163,7 +163,7 @@ class SinPdfApp(QtWidgets.QWidget):
                     meta = get_pdf_meta(entry, GET_META_FROM_PDF)
 
                     new_result = ResultBase(
-                        hoctname=host_name,
+                        hostname=host_name,
                         docname=entry.name,
                         uripath=entry.as_uri(),
                         fullpath=entry.as_posix(),
