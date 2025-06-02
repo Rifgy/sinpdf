@@ -28,6 +28,7 @@ def get_pdf_meta(path: Path, get_meta: bool) -> dict[str, str | int] | str:
     :param path: full path to file
     :param get_meta: get metadata or not
     :rtype: dict[str, str | int] | str
+    :return: full metadata or only with page cont 
     """
 
     meta = dict(Creator='', Producer='', Author='', CreationDate='', ModDate='', PageCount=0)
