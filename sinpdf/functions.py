@@ -73,6 +73,7 @@ def open_file_with_default(file_path: str) -> None:
     """
     Open file from defaults system app
 
+    :param file_path: path to opened file
     :rtype: None
     :return: None
     """
