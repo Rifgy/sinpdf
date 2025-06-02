@@ -162,8 +162,11 @@ class SinPdfApp(QtWidgets.QWidget):
             progress_dialog.setModal(True)
             progress_dialog.setValue(0)
 
-                    text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
-                    meta = get_pdf_meta(entry, GET_META_FROM_PDF)
+            for index, entry in enumerate(pdf_files):
+                if progress_dialog.wasCanceled():
+                    break  # Если пользователь отменил, выходим из цикла
+                text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
+                meta = get_pdf_meta(entry, GET_META_FROM_PDF)
 
                     new_result = ResultBase(
                         hostname=host_name,
