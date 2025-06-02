@@ -121,6 +121,13 @@ class SinPdfApp(QtWidgets.QWidget): #
         now = dt.now()
         QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
 
+    def results_list_keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+            self.on_resultitem_doubleclick()  # Вызываем метод для обработки двойного клика
+        else:
+            #self.keyPressEvent(event)  # Обрабатываем другие нажатия клавиш super().
+            QtWidgets.QListWidget.keyPressEvent(self.results_list, event)
+
     def on_resultitem_doubleclick(self):
         doc = self.results_list.currentItem().text()
         res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
