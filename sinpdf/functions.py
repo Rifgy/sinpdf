@@ -49,6 +49,7 @@ def get_pdf_text(path: Path, getpages: int) -> str :
 
     :param path: Path to PDF file
     :param getpages: The number of pages in the PDF file to save
+    :rtype: str
     :return: Content PDF-file in TEXT format
 
     """
