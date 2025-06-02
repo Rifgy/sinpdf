@@ -155,9 +155,11 @@ class SinPdfApp(QtWidgets.QWidget):
 
             target_dir = Path(directory)
 
-            for entry in target_dir.rglob('*'):      #target_dir.iterdir()
-                if entry.suffix.lower() == '.pdf':
-                    print(f"{entry.name}")
+            # Создаем и настраиваем QProgressDialog
+            progress_dialog = QProgressDialog("Processing files...", "Cancel", 0, len(pdf_files), self)
+            progress_dialog.setWindowTitle("File Processing")
+            progress_dialog.setModal(True)
+            progress_dialog.setValue(0)
 
                     text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
                     meta = get_pdf_meta(entry, GET_META_FROM_PDF)
