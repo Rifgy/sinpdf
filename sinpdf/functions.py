@@ -75,7 +75,7 @@ def get_pdf_text(path: Path, getpages: int) -> str :
             return f'Failed to get text...'
 
 
-def open_file_with_default(file_path):
+def open_file_with_default(file_path: str) -> None:
     """
 
     :rtype: None
