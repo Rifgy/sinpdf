@@ -190,7 +190,7 @@ class SinPdfApp(QtWidgets.QWidget):
             progress_dialog.close()  # Закрываем диалог после завершения обработки
             self.load_last_result('')
         else:
-            QMessageBox.warning(self, 'Select folder error', 'Please select directory whit file\'s')
+            QMessageBox.warning(self, 'Select folder error', 'Please select directory with files')
 
 # start app
 if __name__ == '__main__':
