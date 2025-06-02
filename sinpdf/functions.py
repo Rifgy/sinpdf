@@ -44,7 +44,7 @@ def get_pdf_meta(path: Path, get_meta: bool) -> dict[str, str | int] | str:
     return meta
 
 
-def get_pdf_text(path: Path, getpages: int):
+def get_pdf_text(path: Path, getpages: int) -> str :
     """
     Return PDF content in text mode format's
 
