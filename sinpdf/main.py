@@ -28,7 +28,7 @@ Base = reg.generate_base()
 class ResultBase(Base):
     __tablename__ = 'results'
     id = Column(Integer, Sequence('result_id_seq'), primary_key=True)
-    hoctname = Column(String(30))
+    hostname = Column(String(30))
     docname = Column(String(255))
     uripath = Column(String(255))
     fullpath = Column(String(255))
