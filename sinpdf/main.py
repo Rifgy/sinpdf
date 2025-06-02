@@ -161,7 +161,6 @@ class SinPdfApp(QtWidgets.QWidget):
             progress_dialog.setModal(True)
             progress_dialog.setValue(0)
 
-            results_to_add = []
             for index, entry in enumerate(pdf_files):
                 if progress_dialog.wasCanceled():
                     break  # Если пользователь отменил, выходим из цикла
@@ -184,9 +183,6 @@ class SinPdfApp(QtWidgets.QWidget):
                 session.commit()
                 # Обновляем прогресс
                 progress_dialog.setValue(index + 1)
-
-            session.add_all(results_to_add)
-            session.commit()
 
             progress_dialog.close()  # Закрываем диалог после завершения обработки
             self.load_last_result('')
