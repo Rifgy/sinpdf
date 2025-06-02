@@ -5,7 +5,7 @@ from pathlib import Path
 
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QDesktopWidget, QMessageBox
+from PyQt5.QtWidgets import QDesktopWidget, QMessageBox, QProgressDialog
 
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
 from sqlalchemy.orm import sessionmaker, registry
@@ -143,9 +143,8 @@ class SinPdfApp(QtWidgets.QWidget):
 
     def get_files_from_path(self):
         self.path_to_scan.clear()
-        #home = os.getenv("HOME")
         directory = QtWidgets.QFileDialog.getExistingDirectory(
-            self, "Select folder to find PDF files",None, QtWidgets.QFileDialog.ShowDirsOnly
+            self, "Select folder to find PDF files", None, QtWidgets.QFileDialog.ShowDirsOnly
         )
 
         if directory:
@@ -168,21 +167,21 @@ class SinPdfApp(QtWidgets.QWidget):
                 text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
                 meta = get_pdf_meta(entry, GET_META_FROM_PDF)
 
-                    new_result = ResultBase(
-                        hostname=host_name,
-                        docname=entry.name,
-                        uripath=entry.as_uri(),
-                        fullpath=entry.as_posix(),
-                        pagecount=meta['PageCount'],
-                        doctext=text,
-                        creationdate=meta['CreationDate'],
-                        moddate=meta['ModDate'],
-                        creator=meta['Creator'],
-                        producer=meta['Producer'],
-                        author=meta['Author']
-                    )
-                    session.add(new_result)
-                    session.commit()
+                new_result = ResultBase(
+                    hostname=host_name,
+                    docname=entry.name,
+                    uripath=entry.as_uri(),
+                    fullpath=entry.as_posix(),
+                    pagecount=meta['PageCount'],
+                    doctext=text,
+                    creationdate=meta['CreationDate'],
+                    moddate=meta['ModDate'],
+                    creator=meta['Creator'],
+                    producer=meta['Producer'],
+                    author=meta['Author']
+                )
+                session.add(new_result)
+                session.commit()
 
                 # Обновляем прогресс
                 progress_dialog.setValue(index + 1)
