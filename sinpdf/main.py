@@ -184,6 +184,10 @@ class SinPdfApp(QtWidgets.QWidget):
                     session.add(new_result)
                     session.commit()
 
+                # Обновляем прогресс
+                progress_dialog.setValue(index + 1)
+
+            progress_dialog.close()  # Закрываем диалог после завершения обработки
             self.load_last_result('')
         else:
             QMessageBox.warning(self, 'Select folder error', 'Please select directory whit file\'s')
