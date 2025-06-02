@@ -21,7 +21,7 @@ def get_local_hostname() -> str:
         else:
             return f'error: {e}'
 
-def get_pdf_meta(path: Path, get_meta: bool):
+def get_pdf_meta(path: Path, get_meta: bool) -> dict[str, str | int] | str:
     """
     Return dict with PDF-metadata
 
