@@ -7,7 +7,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QDesktopWidget, QMessageBox, QProgressDialog
 
-from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT
 from sqlalchemy.orm import sessionmaker, registry
 
 from sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_file_with_default
@@ -167,7 +167,6 @@ class SinPdfApp(QtWidgets.QWidget):
                     break  # Если пользователь отменил, выходим из цикла
                 text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
                 meta = get_pdf_meta(entry, GET_META_FROM_PDF)
-
                 new_result = ResultBase(
                     hostname=host_name,
                     docname=entry.name,

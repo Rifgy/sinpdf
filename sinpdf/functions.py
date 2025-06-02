@@ -1,6 +1,5 @@
 import os, sys, subprocess, socket
 import pdfplumber
-
 from pathlib import Path
 
 def get_local_hostname() -> str:
@@ -84,8 +83,5 @@ def open_file_with_default(file_path: str) -> None:
     else:  # For Linux and others
         subprocess.call(['xdg-open', file_path])
 
-
 if __name__ == "__main__":
-    ph = "/home/usver/CODI/_TEST_DATA_/test_data/ХФ ПМ УК 2023/ПМУК-2_02-019_от_10.03.2023_Об_организации_полевых_работ_2023 испр.pdf"
-    get_pdf_meta(ph, True)
     pass
