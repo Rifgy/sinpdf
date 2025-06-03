@@ -74,7 +74,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.text_to_search.textChanged.connect(self.on_search_text_chandge)
         self.text_to_search.returnPressed.connect(self.on_search_enter)
 
-        self.get_path_button = QtWidgets.QPushButton('...', self)
+        self.get_path_button = QPushButton('...', self)
         self.get_path_button.setToolTip('Select path to scan')
         self.get_path_button.resize(self.get_path_button.sizeHint())
         self.get_path_button.clicked.connect(self.get_files_from_path)
