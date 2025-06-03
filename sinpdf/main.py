@@ -84,7 +84,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.get_help.resize(self.get_help.sizeHint())
         self.get_help.clicked.connect(self.on_get_help_click)
 
-        self.results_list = QtWidgets.QListWidget(self)
+        self.results_list = QListWidget(self)
         self.results_list.setToolTip('Double click to open file')
         self.results_list.doubleClicked.connect(self.on_resultitem_doubleclick)
         self.results_list.keyPressEvent = self.results_list_keyPressEvent
