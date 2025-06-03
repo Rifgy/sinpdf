@@ -33,8 +33,14 @@ class ConfigReader:
             self.config.write(configfile)
         print(f'Файл {self.filename} был создан с начальными значениями.')
 
-    def get(self, section, option):
-        """Получить значение из конфигурации."""
+    def get(self, section, option) -> str | None:
+        """
+        Get value from section
+
+        :param section:
+        :param option:
+        :return:
+        """
         try:
             return self.config.get(section, option)
         except (configparser.NoSectionError, configparser.NoOptionError) as e:
