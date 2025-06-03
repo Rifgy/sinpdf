@@ -66,7 +66,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.status_bar = QStatusBar()
 
         # create UI elements
-        self.path_to_scan = QtWidgets.QLineEdit(self)
+        self.path_to_scan = QLineEdit(self)
         self.path_to_scan.setPlaceholderText('Path to scan')
 
         self.text_to_search = QtWidgets.QLineEdit(self)
