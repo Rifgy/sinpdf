@@ -69,8 +69,14 @@ class ConfigReader:
         value = self.get(section, option)
         return float(value) if value is not None else None
 
-    def get_bool(self, section, option):
-        """Получить логическое значение из конфигурации."""
+    def get_bool(self, section: object, option: object) -> bool:
+        """
+        Get BOOL value from INI
+
+        :param section:
+        :param option:
+        :return:
+        """
         value = self.get(section, option)
         return True if value.lower() in ['true', '1', 'yes']  else False
 
