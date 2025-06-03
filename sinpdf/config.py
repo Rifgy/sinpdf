@@ -47,8 +47,14 @@ class ConfigReader:
             print(f"Ошибка: {e}")
             return None
 
-    def get_int(self, section, option):
-        """Получить целочисленное значение из конфигурации."""
+    def get_int(self, section: object, option: object) -> int | None:
+        """
+        Get INT value from INI
+
+        :param section:
+        :param option:
+        :return:
+        """
         value = self.get(section, option)
         return int(value) if value is not None else None
 
