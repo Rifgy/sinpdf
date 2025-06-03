@@ -58,8 +58,14 @@ class ConfigReader:
         value = self.get(section, option)
         return int(value) if value is not None else None
 
-    def get_flost(self, section, option):
-        """Получить действительное значение из конфигурации."""
+    def get_flost(self, section: object, option: object) -> float | None:
+        """
+        Get FLOAT value from INI
+
+        :param section:
+        :param option:
+        :return:
+        """
         value = self.get(section, option)
         return float(value) if value is not None else None
 
