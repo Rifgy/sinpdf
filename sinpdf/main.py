@@ -79,7 +79,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.get_path_button.resize(self.get_path_button.sizeHint())
         self.get_path_button.clicked.connect(self.get_files_from_path)
 
-        self.get_help = QtWidgets.QPushButton('?', self)
+        self.get_help = QPushButton('?', self)
         self.get_help.setToolTip('About...')
         self.get_help.resize(self.get_help.sizeHint())
         self.get_help.clicked.connect(self.on_get_help_click)
