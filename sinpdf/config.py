@@ -93,12 +93,4 @@ GET_META_FROM_PDF = config_reader.get_bool('ScanOpt', 'GetMetaFromPdf')
 
 
 if __name__ == "__main__":
-    print(f'APP_FONT: {APP_FONT}, type:{type(APP_FONT)}')
-    print(f'APP_FONTSIZE: {APP_FONTSIZE}, type:{type(APP_FONTSIZE)}')
-    print(f'BASE_NAME: {BASE_NAME}, type:{type(BASE_NAME)}')
-    print(f'BASE_PATH: {BASE_PATH}, type:{type(BASE_PATH)}')
-    print(f'LIMIT_TO_SCAN_PAGE: {LIMIT_TO_SCAN_PAGE}, type:{type(LIMIT_TO_SCAN_PAGE)}')
-    print(f'GET_META_FROM_PDF: {GET_META_FROM_PDF}, type:{type(GET_META_FROM_PDF)}')
-
-'''
-
+    pass
