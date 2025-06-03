@@ -6,7 +6,7 @@ class ConfigReader:
         self.filename = filename
         self.config = configparser.ConfigParser()
 
-        # Проверка наличия файла и его создание, если он отсутствует
+        # create INI if not exist
         if not os.path.exists(self.filename):
             self.create_default_config()
 
