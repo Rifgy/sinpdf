@@ -12,8 +12,12 @@ class ConfigReader:
 
         self.config.read(self.filename)
 
-    def create_default_config(self):
-        """Создать файл конфигурации с начальными значениями."""
+    def create_default_config(self) -> None:
+        """
+        Create INI file with defaults value's
+
+        :rtype: None
+        """
         self.config['Default'] = {
             'FontName': 'Arial',
             'FontSize': 12
