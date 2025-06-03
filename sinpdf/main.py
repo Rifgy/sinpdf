@@ -63,7 +63,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.setMinimumSize(500,200)
 
         # create status bar
-        self.status_bar = QtWidgets.QStatusBar()
+        self.status_bar = QStatusBar()
 
         # create UI elements
         self.path_to_scan = QtWidgets.QLineEdit(self)
