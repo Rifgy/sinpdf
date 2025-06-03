@@ -15,9 +15,9 @@ def get_files_from_path(pathtodir: str) -> int:
         return 0
 
 if __name__ == "__main__":
-
+    pass
     #pth = "Y:\\146 Канцелярия\\Общая\\Приказы"
     #pth = "Y:\\146 Канцелярия\\Общая\\Распоряжения"
     #pth = "Y:\\146 Канцелярия\\Общая"
-    pth = "/home/usver"
-    print(f"File count: {get_files_from_path(pth)}")
+    #pth = "/home/usver"
+    #print(f"File count: {get_files_from_path(pth)}")

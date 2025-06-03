@@ -44,7 +44,6 @@ class ConfigReader:
         try:
             return self.config.get(section, option)
         except (configparser.NoSectionError, configparser.NoOptionError) as e:
-            print(f"Ошибка: {e}")
             return None
 
     def get_int(self, section: object, option: object) -> int | None:
@@ -79,8 +78,6 @@ class ConfigReader:
         """
         value = self.get(section, option)
         return True if value.lower() in ['true', '1', 'yes']  else False
-
-        # Пример использования
 
 config_reader = ConfigReader('config.ini')
 
