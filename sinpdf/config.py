@@ -88,6 +88,7 @@ BASE_PATH = config_reader.get('ScanOpt', 'BasePath')
 LIMIT_TO_SCAN_PAGE = config_reader.get_int('ScanOpt', 'LimitToScanPages')
 GET_META_FROM_PDF = config_reader.get_bool('ScanOpt', 'GetMetaFromPdf')
 
-
+'''
 if __name__ == "__main__":
     pass
+'''
