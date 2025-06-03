@@ -69,7 +69,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.path_to_scan = QLineEdit(self)
         self.path_to_scan.setPlaceholderText('Path to scan')
 
-        self.text_to_search = QtWidgets.QLineEdit(self)
+        self.text_to_search = QLineEdit(self)
         self.text_to_search.setPlaceholderText('Text to search')
         self.text_to_search.textChanged.connect(self.on_search_text_chandge)
         self.text_to_search.returnPressed.connect(self.on_search_enter)
