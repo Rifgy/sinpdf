@@ -99,8 +99,11 @@ class ConfigReader:
                 settings_dict[option] = settings[option]
             return settings_dict
         else:
-            print(f"Секция {section} не найдена.")
-            return None
+            if __name__ == "__main__":
+                print(f"Section {section} not found.")
+                return dict()
+            else:
+                return dict()
 
 '''
 if __name__ == "__main__":
