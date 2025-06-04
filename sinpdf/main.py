@@ -143,7 +143,13 @@ class SinPdfApp(QtWidgets.QWidget): #
         print(self.text_to_search.text())
         self.load_last_result(search_str)
 
-    def load_last_result(self, search_filter):
+    def load_last_result(self, search_filter: str) -> None:
+        """
+        Load item's to results_list from Base with filter
+
+        :param search_filter: string from text_to_search or ''
+        :rtype: None
+        """
         self.results_list.clear()
         if search_filter:
             list_result = session.query(ResultBase).filter(ResultBase.doctext.like(f"%{search_filter}%")).all()
