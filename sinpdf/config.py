@@ -28,6 +28,9 @@ class ConfigReader:
             'LimitToScanPages': 3,
             'GetMetaFromPdf': True
         }
+        self.config['BaseFiles'] = {
+            'Db1': '',
+        }
 
         with open(self.filename, 'w') as configfile:
             self.config.write(configfile)
