@@ -179,7 +179,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         """
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
-        #logging.debug(f'Search text changed to: {search_str}')
+        #ogging.debug(f'Search text changed to: {search_str}')
 
     def on_search_enter(self) -> None:
         """

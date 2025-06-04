@@ -41,9 +41,17 @@ getmetafrompdf = True
 - `config.ini`  : configuration file.
 
 ### Future Development
-- **Integration and Compatibility**:
-  - Ensuring compatibility with applications like paperless-ngx.
-- Enhancing tag organization and developing hierarchical information through the application of clustering algorithms on a vector database
+- **UI**:
+  - combobox with exist base (from INI)
+  - load selected base in result list
+  - search in selected base
+- **Code:**
+  - INI файл - add section for exist base with path
+  - load to combobox
+  - sort result list from document datatime
+  - add info (metadata) to status bar on change item in result list
+  - change about text (license GNU GPL to MIT)
+- Cleaning code
 
 ### License:
 #### MIT License
