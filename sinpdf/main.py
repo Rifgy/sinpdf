@@ -132,7 +132,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         now = dt.now()
         QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
 
-    def on_results_list_keyPressEvent(self, event) -> None:
+    def on_results_list_keypress_event(self, event) -> None:
         """
         Processing the key pressed on item in results_list
 
