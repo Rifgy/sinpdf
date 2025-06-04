@@ -152,8 +152,9 @@ class SinPdfApp(QtWidgets.QWidget): #
         for item in list_result:
             self.results_list.addItem(f"{item.docname}")
 
-        # Обновляем статус-бар с количеством найденных результатов
-        self.update_status_bar(len(list_result))
+    def update_status_bar(self, text_to_status: str) -> None:
+        """
+        Update status bar message fron text_to_status
 
     def update_status_bar(self, count):
         if count == 0:
