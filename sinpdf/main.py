@@ -151,12 +151,16 @@ class SinPdfApp(QtWidgets.QWidget): #
         :rtype: None
         """
         self.results_list.clear()
-        if search_filter:
-            list_result = session.query(ResultBase).filter(ResultBase.doctext.like(f"%{search_filter}%")).all()
-        else:
-            list_result = session.query(ResultBase).all()
-        for item in list_result:
-            self.results_list.addItem(f"{item.docname}")
+        with sessionmaker(bind=engine)() as session:
+            if search_filter:
+                list_result = session.query(ResultBase).filter(ResultBase.doctext.like(f"%{search_filter}%")).all()
+            else:
+                list_result = session.query(ResultBase).all()
+            for item in list_result:
+                self.results_list.addItem(f"{item.docname}")
+            # status bar update
+            text = "No results found." if len(list_result) == 0 else f"{len(list_result)} result(s) found."
+            self.update_status_bar(text)
 
     def update_status_bar(self, text_to_status: str) -> None:
         """
