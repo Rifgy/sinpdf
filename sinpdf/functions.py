@@ -32,14 +32,19 @@ def get_pdf_meta(path: Path, get_meta: bool) -> dict[str, str | int] | str:
 
     meta = dict(Creator='', Producer='', Author='', CreationDate='', ModDate='', PageCount=0)
 
-    with pdfplumber.open(path) as pdf:
-        meta['PageCount'] = len(pdf.pages)
-
-        if get_meta:
-            meta_pdf = pdf.metadata
-            if meta_pdf:
-                meta.update(meta_pdf)
-    return meta
+    try:
+        with pdfplumber.open(path) as pdf:
+            meta['PageCount'] = len(pdf.pages)
+            if get_meta:
+                meta_pdf = pdf.metadata
+                if meta_pdf:
+                    meta.update(meta_pdf)
+        return meta
+    except Exception as e:
+        if __name__ == "__main__":
+            return f"Error when receiving the metadata of the PDF-file: {e}"
+        else:
+            return meta
 
 def get_pdf_text(path: Path, getpages: int) -> str :
     """
@@ -62,7 +67,7 @@ def get_pdf_text(path: Path, getpages: int) -> str :
         return text
     except Exception as e:
         if __name__ == "__main__":
-            return f"Error when receiving the metadata of the PDF-file: {e}"
+            return f"Error when receiving the text of the PDF-file: {e}"
         else:
             return f'Failed to get text...'
 

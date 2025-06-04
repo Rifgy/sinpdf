@@ -18,6 +18,16 @@ from sinpdf.resource import MSG
 #debug: Module pdfminer errors
 import logging
 logging.getLogger('pdfminer').setLevel(logging.ERROR)
+logging.getLogger('SinPdfApp').setLevel(logging.DEBUG)
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("sinpdf.log"),
+        logging.StreamHandler()
+    ]
+)
 
 __version__ = "0.0.1"
 
@@ -131,6 +141,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         """
         now = dt.now()
         QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
+        logging.info('Help information displayed.')
 
     def on_results_list_keypress_event(self, event) -> None:
         """
@@ -140,7 +151,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         :rtype: None
         """
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
-            self.on_resultitem_doubleclick()  # Вызываем метод для обработки двойного клика
+            self.on_result_item_doubleclick()  # Вызываем метод для обработки двойного клика
         else:
             #self.keyPressEvent(event)  # Обрабатываем другие нажатия клавиш super().
             QtWidgets.QListWidget.keyPressEvent(self.results_list, event)
@@ -152,8 +163,13 @@ class SinPdfApp(QtWidgets.QWidget): #
         :rtype: None
         """
         doc = self.results_list.currentItem().text()
-        res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
-        open_file_with_default(str(res.fullpath))
+        with sessionmaker(bind=engine)() as session:
+            res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
+            if res:
+                open_file_with_default(str(res.fullpath))
+                logging.info(f'Opened file: {res.fullpath}')
+            else:
+                logging.warning(f'File not found in database: {doc}')
 
     def on_search_text_change(self) -> None:
         """
@@ -163,6 +179,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         """
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
+        #logging.debug(f'Search text changed to: {search_str}')
 
     def on_search_enter(self) -> None:
         """
@@ -172,6 +189,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         """
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
+        logging.info(f'Search entered: {search_str}')
 
     def load_last_result(self, search_filter: str) -> None:
         """
@@ -191,6 +209,7 @@ class SinPdfApp(QtWidgets.QWidget): #
             # status bar update
             text = "No results found." if len(list_result) == 0 else f"{len(list_result)} result(s) found."
             self.update_status_bar(text)
+            logging.debug(f'Loaded {len(list_result)} results for search filter: {search_filter}')
 
     def update_status_bar(self, text_to_status: str) -> None:
         """
@@ -215,6 +234,7 @@ class SinPdfApp(QtWidgets.QWidget): #
             self.path_to_scan.setCursorPosition(0)
 
             host_name = get_local_hostname()
+            logging.info(f'Selected directory: {directory}')
 
             target_dir = Path(directory)
 
@@ -251,14 +271,19 @@ class SinPdfApp(QtWidgets.QWidget): #
                         )
                         session.add(new_result)
                         session.commit()
-                    except Exception as e:
-                        print(f"Error processing file {entry}: {e}")
+                        logging.info(f'Processed file: {entry}')
+                    except (IOError, ValueError) as e:
+                        logging.error(f"Error processing file {entry}: {e}")
+                        self.status_bar.showMessage(f"Error processing file {entry.name}: {e}")
+                        continue
                     # progress bar update
                     progress_dialog.setValue(index + 1)
             progress_dialog.close()  # Закрываем диалог после завершения обработки
             self.load_last_result('')
+            logging.info('File processing completed.')
         else:
             QMessageBox.warning(self, 'Select folder error', 'Please select directory with files')
+            logging.warning('No directory selected for file processing.')
 
 
 # start app
@@ -268,6 +293,7 @@ if __name__ == '__main__':
         app.setFont(QFont(APP_FONT, APP_FONTSIZE))
         ex = SinPdfApp()
         ex.show()
+        logging.info('Application started.')
         sys.exit(app.exec_())
     except Exception as e:
-        print(e)
+        logging.error(f'Exception occurred: {e}')
