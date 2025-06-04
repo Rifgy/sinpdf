@@ -44,6 +44,8 @@ class ConfigReader:
         try:
             return self.config.get(section, option)
         except (configparser.NoSectionError, configparser.NoOptionError) as e:
+            if __name__ == "__main__":
+                print(f"Error get: {e}")
             return None
 
     def get_int(self, section: object, option: object) -> int | None:
