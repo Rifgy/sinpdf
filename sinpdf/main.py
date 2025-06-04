@@ -87,7 +87,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.results_list = QListWidget(self)
         self.results_list.setToolTip('Double click to open file')
         self.results_list.doubleClicked.connect(self.on_result_item_doubleclick)
-        self.results_list.keyPressEvent = self.on_results_list_keyPressEvent
+        self.results_list.keyPressEvent = self.on_results_list_keypress_event
 
         # Install the layout
         vlay = QtWidgets.QVBoxLayout()
