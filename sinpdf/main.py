@@ -71,7 +71,7 @@ class SinPdfApp(QtWidgets.QWidget): #
 
         self.text_to_search = QLineEdit(self)
         self.text_to_search.setPlaceholderText('Text to search')
-        self.text_to_search.textChanged.connect(self.on_search_text_chandge)
+        self.text_to_search.textChanged.connect(self.on_search_text_change)
         self.text_to_search.returnPressed.connect(self.on_search_enter)
 
         self.get_path_button = QPushButton('...', self)
@@ -86,8 +86,8 @@ class SinPdfApp(QtWidgets.QWidget): #
 
         self.results_list = QListWidget(self)
         self.results_list.setToolTip('Double click to open file')
-        self.results_list.doubleClicked.connect(self.on_resultitem_doubleclick)
-        self.results_list.keyPressEvent = self.results_list_keyPressEvent
+        self.results_list.doubleClicked.connect(self.on_result_item_doubleclick)
+        self.results_list.keyPressEvent = self.on_results_list_keyPressEvent
 
         # Install the layout
         vlay = QtWidgets.QVBoxLayout()
@@ -171,7 +171,6 @@ class SinPdfApp(QtWidgets.QWidget): #
         :rtype: None
         """
         search_str = self.text_to_search.text()
-        print(self.text_to_search.text())
         self.load_last_result(search_str)
 
     def load_last_result(self, search_filter: str) -> None:
