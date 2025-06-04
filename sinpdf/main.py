@@ -204,7 +204,10 @@ class SinPdfApp(QtWidgets.QWidget): #
     def get_files_from_path(self):
         self.path_to_scan.clear()
         directory = QtWidgets.QFileDialog.getExistingDirectory(
-            self, "Select folder to find PDF files", None, QtWidgets.QFileDialog.ShowDirsOnly
+            self,
+            "Select folder to find PDF files",
+            None,
+            QtWidgets.QFileDialog.ShowDirsOnly
         )
 
         if directory:
@@ -215,7 +218,7 @@ class SinPdfApp(QtWidgets.QWidget): #
 
             target_dir = Path(directory)
 
-            self.update_status_bar(f'Scan all pdf-file\'s in {directory}')
+            self.update_status_bar(f'Scan all PDF file\'s in {directory}')
 
             # get list ALL pdf-files in select dir
             pdf_files = list(target_dir.rglob('*.pdf'))
@@ -262,7 +265,6 @@ class SinPdfApp(QtWidgets.QWidget): #
 if __name__ == '__main__':
     try:
         app = QtWidgets.QApplication(sys.argv)
-        # set font for all app widget
         app.setFont(QFont(APP_FONT, APP_FONTSIZE))
         ex = SinPdfApp()
         ex.show()
