@@ -24,7 +24,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("sinpdf.log"),
+        logging.FileHandler("sinpdf.log",'w','utf-8'),
         logging.StreamHandler()
     ]
 )
