@@ -81,8 +81,14 @@ class ConfigReader:
         value = self.get(section, option)
         return True if value.lower() in ['true', '1', 'yes']  else False
 
-    def get_dict(self, section: object):
-        # Словарь для хранения опций
+    def get_dict(self, section: str) -> dict[Any, Any]:
+        """
+        Get DICT value in INI
+
+        :param section:  Section name
+        :return: Section option(s)
+        :rtype: dict[Any, Any]
+        """
         settings_dict = {}
 
         # Получаем секцию 'Settings'
