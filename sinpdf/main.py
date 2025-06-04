@@ -122,7 +122,13 @@ class SinPdfApp(QtWidgets.QWidget): #
         now = dt.now()
         QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
 
-    def on_results_list_keyPressEvent(self, event):
+    def on_results_list_keyPressEvent(self, event) -> None:
+        """
+        Processing the key pressed on item in results_list
+
+        :param event:
+        :rtype: None
+        """
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
             self.on_resultitem_doubleclick()  # Вызываем метод для обработки двойного клика
         else:
