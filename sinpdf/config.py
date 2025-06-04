@@ -23,7 +23,7 @@ class ConfigReader:
             'FontSize': 12
         }
         self.config['ScanOpt'] = {
-            'BaseName': 'result.db',
+            'BaseName': 'results.db',
             'BasePath': '',
             'LimitToScanPages': 3,
             'GetMetaFromPdf': True
