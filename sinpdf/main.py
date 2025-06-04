@@ -213,7 +213,8 @@ class SinPdfApp(QtWidgets.QWidget): #
             host_name = get_local_hostname()
 
             target_dir = Path(directory)
-            pdf_files = list(target_dir.rglob('*.pdf'))  # Получаем список всех PDF-файлов
+
+            self.update_status_bar(f'Scan all pdf-file\'s in {directory}')
 
             # Создаем и настраиваем QProgressDialog
             progress_dialog = QProgressDialog("Processing files...", "Cancel", 0, len(pdf_files), self)
