@@ -118,7 +118,12 @@ class SinPdfApp(QtWidgets.QWidget): #
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def on_get_help_click(self):
+    def on_get_help_click(self) -> None:
+        """
+        Processing the click on get_help button
+
+        :rtype: None
+        """
         now = dt.now()
         QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
 
