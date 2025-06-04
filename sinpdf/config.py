@@ -79,7 +79,9 @@ class ConfigReader:
         value = self.get(section, option)
         return True if value.lower() in ['true', '1', 'yes']  else False
 
-config_reader = ConfigReader('config.ini')
+    def get_dict(self, section: object):
+        # Словарь для хранения опций
+        settings_dict = {}
 
 APP_FONT = config_reader.get('Default', 'FontName')
 APP_FONTSIZE = config_reader.get_int('Default', 'FontSize')
