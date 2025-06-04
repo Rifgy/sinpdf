@@ -156,11 +156,10 @@ class SinPdfApp(QtWidgets.QWidget): #
         """
         Update status bar message fron text_to_status
 
-    def update_status_bar(self, count):
-        if count == 0:
-            self.status_bar.showMessage("No results found.")
-        else:
-            self.status_bar.showMessage(f"{count} result(s) found.")
+        :param text_to_status:
+        :rtype: None
+        """
+        self.status_bar.showMessage(text_to_status)
 
     def get_files_from_path(self):
         self.path_to_scan.clear()
