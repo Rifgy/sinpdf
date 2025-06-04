@@ -249,6 +249,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         else:
             QMessageBox.warning(self, 'Select folder error', 'Please select directory with files')
 
+
 # start app
 if __name__ == '__main__':
     try:
