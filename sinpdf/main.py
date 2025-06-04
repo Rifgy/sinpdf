@@ -134,7 +134,12 @@ class SinPdfApp(QtWidgets.QWidget): #
         res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
         open_file_with_default(str(res.fullpath))
 
-    def on_search_text_chandge(self):
+    def on_search_text_change(self) -> None:
+        """
+        Processing the change text in text_to_search
+
+        :rtype: None
+        """
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
 
