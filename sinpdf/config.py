@@ -83,12 +83,16 @@ class ConfigReader:
         # Словарь для хранения опций
         settings_dict = {}
 
-APP_FONT = config_reader.get('Default', 'FontName')
-APP_FONTSIZE = config_reader.get_int('Default', 'FontSize')
-BASE_NAME = config_reader.get('ScanOpt', 'BaseName')
-BASE_PATH = config_reader.get('ScanOpt', 'BasePath')
-LIMIT_TO_SCAN_PAGE = config_reader.get_int('ScanOpt', 'LimitToScanPages')
-GET_META_FROM_PDF = config_reader.get_bool('ScanOpt', 'GetMetaFromPdf')
+        # Получаем секцию 'Settings'
+        if section in self.config:
+            settings = self.config[section]
+            # Присваиваем опции переменным в словаре
+            for option in settings:
+                settings_dict[option] = settings[option]
+            return settings_dict
+        else:
+            print(f"Секция {section} не найдена.")
+            return None
 
 '''
 if __name__ == "__main__":
