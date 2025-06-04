@@ -138,7 +138,12 @@ class SinPdfApp(QtWidgets.QWidget): #
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
 
-    def on_search_enter(self):
+    def on_search_enter(self) -> None:
+        """
+        Processing the Enter key pressing event in text_to_search
+
+        :rtype: None
+        """
         search_str = self.text_to_search.text()
         print(self.text_to_search.text())
         self.load_last_result(search_str)
