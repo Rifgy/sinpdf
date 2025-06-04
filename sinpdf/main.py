@@ -222,29 +222,32 @@ class SinPdfApp(QtWidgets.QWidget): #
             progress_dialog.setModal(True)
             progress_dialog.setValue(0)
 
-            for index, entry in enumerate(pdf_files):
-                if progress_dialog.wasCanceled():
-                    break  # Если пользователь отменил, выходим из цикла
-                text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
-                meta = get_pdf_meta(entry, GET_META_FROM_PDF)
-                new_result = ResultBase(
-                    hostname=host_name,
-                    docname=entry.name,
-                    uripath=entry.as_uri(),
-                    fullpath=entry.as_posix(),
-                    pagecount=meta['PageCount'],
-                    doctext=text,
-                    creationdate=meta['CreationDate'],
-                    moddate=meta['ModDate'],
-                    creator=meta['Creator'],
-                    producer=meta['Producer'],
-                    author=meta['Author']
-                )
-                session.add(new_result)
-                session.commit()
-                # Обновляем прогресс
-                progress_dialog.setValue(index + 1)
-
+            with sessionmaker(bind=engine)() as session:
+                for index, entry in enumerate(pdf_files):
+                    if progress_dialog.wasCanceled():
+                        break  # Если пользователь отменил, выходим из цикла
+                    try:
+                        text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
+                        meta = get_pdf_meta(entry, GET_META_FROM_PDF)
+                        new_result = ResultBase(
+                            hostname=host_name,
+                            docname=entry.name,
+                            uripath=entry.as_uri(),
+                            fullpath=entry.as_posix(),
+                            pagecount=meta['PageCount'],
+                            doctext=text,
+                            creationdate=meta['CreationDate'],
+                            moddate=meta['ModDate'],
+                            creator=meta['Creator'],
+                            producer=meta['Producer'],
+                            author=meta['Author']
+                        )
+                        session.add(new_result)
+                        session.commit()
+                    except Exception as e:
+                        print(f"Error processing file {entry}: {e}")
+                    # progress bar update
+                    progress_dialog.setValue(index + 1)
             progress_dialog.close()  # Закрываем диалог после завершения обработки
             self.load_last_result('')
         else:
