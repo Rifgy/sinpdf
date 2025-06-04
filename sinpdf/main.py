@@ -112,7 +112,12 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.to_center()
         self.load_last_result('')
 
-    def to_center(self):
+    def to_center(self) -> None:
+        """
+        Set main form to center user desktop
+
+        :rtype: None
+        """
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
