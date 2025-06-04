@@ -129,7 +129,7 @@ class SinPdfApp(QtWidgets.QWidget): #
             #self.keyPressEvent(event)  # Обрабатываем другие нажатия клавиш super().
             QtWidgets.QListWidget.keyPressEvent(self.results_list, event)
 
-    def on_resultitem_doubleclick(self) -> None:
+    def on_result_item_doubleclick(self) -> None:
         """
         Processing the double click on item in results_list
 
