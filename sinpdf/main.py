@@ -129,7 +129,12 @@ class SinPdfApp(QtWidgets.QWidget): #
             #self.keyPressEvent(event)  # Обрабатываем другие нажатия клавиш super().
             QtWidgets.QListWidget.keyPressEvent(self.results_list, event)
 
-    def on_resultitem_doubleclick(self):
+    def on_resultitem_doubleclick(self) -> None:
+        """
+        Processing the double click on item in results_list
+
+        :rtype: None
+        """
         doc = self.results_list.currentItem().text()
         res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
         open_file_with_default(str(res.fullpath))
