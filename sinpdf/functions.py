@@ -29,7 +29,6 @@ def get_pdf_meta(path: Path, get_meta: bool) -> dict[str, str | int] | str:
     :rtype: dict[str, str | int] | str
     :return: full metadata or only with page cont 
     """
-
     meta = dict(Creator='', Producer='', Author='', CreationDate='', ModDate='', PageCount=0)
 
     try:

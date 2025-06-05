@@ -5,31 +5,42 @@ from pathlib import Path
 
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import (QDesktopWidget, QMessageBox, QProgressDialog,
+from PyQt5.QtWidgets import (QDesktopWidget, QMessageBox, QProgressDialog, QComboBox,
                              QStatusBar, QLineEdit, QPushButton, QListWidget)
 
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT
 from sqlalchemy.orm import sessionmaker, registry
 
 from sinpdf.functions import get_local_hostname, get_pdf_meta, get_pdf_text, open_file_with_default
-from sinpdf.config import APP_FONT, APP_FONTSIZE, BASE_NAME, BASE_PATH, LIMIT_TO_SCAN_PAGE, GET_META_FROM_PDF
-from sinpdf.resource import MSG
+from sinpdf.config import ConfigReader
+from sinpdf.resource import MessA
+
+__version__ = "0.0.4"
+
+config_reader = ConfigReader('config.ini')
+APP_FONT = config_reader.get('Default', 'FontName')
+APP_FONTSIZE = config_reader.get_int('Default', 'FontSize')
+BASE_NAME = config_reader.get('ScanOpt', 'BaseName')
+BASE_PATH = config_reader.get('ScanOpt', 'BasePath')
+LIMIT_TO_SCAN_PAGE = config_reader.get_int('ScanOpt', 'LimitToScanPages')
+GET_META_FROM_PDF = config_reader.get_bool('ScanOpt', 'GetMetaFromPdf')
+DB_LIST = config_reader.get_dict('BaseFile')
 
 #debug: Module pdfminer errors
 import logging
-logging.getLogger('pdfminer').setLevel(logging.ERROR)
-logging.getLogger('SinPdfApp').setLevel(logging.DEBUG)
 
+logging.getLogger('pdfminer').setLevel(logging.ERROR)
+logging.getLogger(__name__).setLevel(logging.WARNING)
 logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(levelname)s - %(message)s',
+    level=logging.WARNING,
+    format='%(name)s %(asctime)s %(levelname)s %(message)s',
     handlers=[
-        logging.FileHandler("sinpdf.log",'w','utf-8'),
+        logging.FileHandler(f"sinpdf.log",'w','utf-8'),
         logging.StreamHandler()
     ]
 )
 
-__version__ = "0.0.1"
+mess = MessA()
 
 reg = registry()
 # declarative base class
@@ -69,7 +80,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle('Search in PDF')
+        self.setWindowTitle(mess.WindowTitle)
         self.setMinimumSize(500,200)
 
         # create status bar
@@ -77,20 +88,20 @@ class SinPdfApp(QtWidgets.QWidget): #
 
         # create UI elements
         self.path_to_scan = QLineEdit(self)
-        self.path_to_scan.setPlaceholderText('Path to scan')
+        self.path_to_scan.setPlaceholderText(mess.PathToScanPlaceholderText)
 
         self.text_to_search = QLineEdit(self)
-        self.text_to_search.setPlaceholderText('Text to search')
+        self.text_to_search.setPlaceholderText(mess.TextToSearchPlaceholderText)
         self.text_to_search.textChanged.connect(self.on_search_text_change)
         self.text_to_search.returnPressed.connect(self.on_search_enter)
 
-        self.get_path_button = QPushButton('...', self)
-        self.get_path_button.setToolTip('Select path to scan')
+        self.get_path_button = QPushButton(mess.GetPathButtonText, self)
+        self.get_path_button.setToolTip(mess.GetPathButtonToolTip)
         self.get_path_button.resize(self.get_path_button.sizeHint())
         self.get_path_button.clicked.connect(self.get_files_from_path)
 
-        self.get_help = QPushButton('?', self)
-        self.get_help.setToolTip('About...')
+        self.get_help = QPushButton(mess.GetHelpText, self)
+        self.get_help.setToolTip(mess.GetHelpToolTip)
         self.get_help.resize(self.get_help.sizeHint())
         self.get_help.clicked.connect(self.on_get_help_click)
 
@@ -100,7 +111,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         #self.get_base.currentIndexChanged.connect(self.on_get_base_changed)
 
         self.results_list = QListWidget(self)
-        self.results_list.setToolTip('Double click to open file')
+        self.results_list.setToolTip(mess.ResultsListSetToolTip)
         self.results_list.doubleClicked.connect(self.on_result_item_doubleclick)
         self.results_list.keyPressEvent = self.on_results_list_keypress_event
 
@@ -147,8 +158,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         :rtype: None
         """
         now = dt.now()
-        QMessageBox.about(self, 'SinPdf about', MSG['about'].format(version=__version__, year=now.year))
-        logging.info('Help information displayed.')
+        QMessageBox.about(self, mess.MsgBoxAbout, mess.About.format(version=__version__, year=now.year))
 
     def on_results_list_keypress_event(self, event) -> None:
         """
@@ -160,7 +170,6 @@ class SinPdfApp(QtWidgets.QWidget): #
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
             self.on_result_item_doubleclick()  # Вызываем метод для обработки двойного клика
         else:
-            #self.keyPressEvent(event)  # Обрабатываем другие нажатия клавиш super().
             QtWidgets.QListWidget.keyPressEvent(self.results_list, event)
 
     def on_result_item_doubleclick(self) -> None:
@@ -174,7 +183,6 @@ class SinPdfApp(QtWidgets.QWidget): #
             res = session.query(ResultBase).filter(ResultBase.docname == doc).first()
             if res:
                 open_file_with_default(str(res.fullpath))
-                logging.info(f'Opened file: {res.fullpath}')
             else:
                 logging.warning(f'File not found in database: {doc}')
 
@@ -202,7 +210,6 @@ class SinPdfApp(QtWidgets.QWidget): #
         """
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
-        logging.info(f'Search entered: {search_str}')
 
     def load_last_result(self, search_filter: str) -> None:
         """
@@ -222,7 +229,6 @@ class SinPdfApp(QtWidgets.QWidget): #
             # status bar update
             text = "No results found." if len(list_result) == 0 else f"{len(list_result)} result(s) found."
             self.update_status_bar(text)
-            logging.debug(f'Loaded {len(list_result)} results for search filter: {search_filter}')
 
     def update_status_bar(self, text_to_status: str) -> None:
         """
@@ -237,35 +243,33 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.path_to_scan.clear()
         directory = QtWidgets.QFileDialog.getExistingDirectory(
             self,
-            "Select folder to find PDF files",
+            mess.FileDlgText,
             None,
             QtWidgets.QFileDialog.ShowDirsOnly
         )
 
         if directory:
+            self.update_status_bar(f'{mess.StatusScanFileInDir} {directory}')
             self.path_to_scan.setText(directory)
             self.path_to_scan.setCursorPosition(0)
 
             host_name = get_local_hostname()
-            logging.info(f'Selected directory: {directory}')
 
             target_dir = Path(directory)
-
-            self.update_status_bar(f'Scan all PDF file\'s in {directory}')
 
             # get list ALL pdf-files in select dir
             pdf_files = list(target_dir.rglob('*.pdf'))
 
             # create add set QProgressDialog
-            progress_dialog = QProgressDialog("Processing files...", "Cancel", 0, len(pdf_files), self)
-            progress_dialog.setWindowTitle("File Processing")
+            progress_dialog = QProgressDialog(mess.ProcDlgText, mess.ProcDlgBtnText, 0, len(pdf_files), self)
+            progress_dialog.setWindowTitle(mess.ProcDlgWinTitle)
             progress_dialog.setModal(True)
             progress_dialog.setValue(0)
 
             with sessionmaker(bind=engine)() as session:
                 for index, entry in enumerate(pdf_files):
                     if progress_dialog.wasCanceled():
-                        break  # Если пользователь отменил, выходим из цикла
+                        break
                     try:
                         text = get_pdf_text(entry, LIMIT_TO_SCAN_PAGE)
                         meta = get_pdf_meta(entry, GET_META_FROM_PDF)
@@ -293,9 +297,8 @@ class SinPdfApp(QtWidgets.QWidget): #
                     progress_dialog.setValue(index + 1)
             progress_dialog.close()  # Закрываем диалог после завершения обработки
             self.load_last_result('')
-            logging.info('File processing completed.')
         else:
-            QMessageBox.warning(self, 'Select folder error', 'Please select directory with files')
+            QMessageBox.warning(self, mess.MsgBoxWarnTitle, mess.MsgBoxWarnText)
             logging.warning('No directory selected for file processing.')
 
 
@@ -306,7 +309,6 @@ if __name__ == '__main__':
         app.setFont(QFont(APP_FONT, APP_FONTSIZE))
         ex = SinPdfApp()
         ex.show()
-        logging.info('Application started.')
         sys.exit(app.exec_())
     except Exception as e:
         logging.error(f'Exception occurred: {e}')
