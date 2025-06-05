@@ -127,6 +127,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.resize(700,400)
         self.to_center()
         self.load_last_result('')
+        #self.on_get_base_changed(0)
 
     def to_center(self) -> None:
         """
