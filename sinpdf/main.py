@@ -113,6 +113,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         hlay1.addWidget(self.text_to_search)
         hlay1.addWidget(self.get_help)
         vlay.addLayout(hlay)
+        #vlay.addWidget(self.get_base)
         vlay.addLayout(hlay1)
         vlay.addWidget(self.results_list)
         vlay.addWidget(self.status_bar)  # Добавляем статус-бар в макет
