@@ -44,6 +44,7 @@ def get_pdf_meta(path: Path, get_meta: bool) -> dict[str, str | int] | str:
         if __name__ == "__main__":
             return f"Error when receiving the metadata of the PDF-file: {e}"
         else:
+            logging.error(f"Error opening file {path} as PDF: {e}")
             return meta
 
 def get_pdf_text(path: Path, getpages: int) -> str :
@@ -69,6 +70,7 @@ def get_pdf_text(path: Path, getpages: int) -> str :
         if __name__ == "__main__":
             return f"Error when receiving the text of the PDF-file: {e}"
         else:
+            logging.error(f"Failed to get text from file {path} : {e}")
             return f'Failed to get text...'
 
 def open_file_with_default(file_path: str) -> None:
