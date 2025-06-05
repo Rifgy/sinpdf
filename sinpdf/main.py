@@ -94,6 +94,11 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.get_help.resize(self.get_help.sizeHint())
         self.get_help.clicked.connect(self.on_get_help_click)
 
+        #self.get_base = QComboBox()
+        #for key, value in DB_LIST.items():
+        #    self.get_base.addItem(value, key)
+        #self.get_base.currentIndexChanged.connect(self.on_get_base_changed)
+
         self.results_list = QListWidget(self)
         self.results_list.setToolTip('Double click to open file')
         self.results_list.doubleClicked.connect(self.on_result_item_doubleclick)
