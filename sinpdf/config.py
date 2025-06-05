@@ -1,5 +1,7 @@
 import configparser
 import os
+from typing import Any
+
 
 class ConfigReader:
     def __init__(self, filename):
@@ -34,7 +36,6 @@ class ConfigReader:
 
         with open(self.filename, 'w') as configfile:
             self.config.write(configfile)
-        print(f'Файл {self.filename} был создан с начальными значениями.')
 
     def get(self, section, option) -> str | None:
         """
@@ -93,11 +94,8 @@ class ConfigReader:
         :rtype: dict[Any, Any]
         """
         settings_dict = {}
-
-        # Получаем секцию 'Settings'
         if section in self.config:
             settings = self.config[section]
-            # Присваиваем опции переменным в словаре
             for option in settings:
                 settings_dict[option] = settings[option]
             return settings_dict
@@ -108,13 +106,12 @@ class ConfigReader:
             else:
                 return dict()
 
-'''
 if __name__ == "__main__":
     '''
     ini_file_path = 'config.ini'
     config_reader = ConfigReader(ini_file_path)
 
-    DB_LIST = config_reader.get_dict('BaseFile')
+    DB_LIST = config_reader.get_dict('BaseFiles')
 
     if DB_LIST:
         # Выводим все опции и их значения
@@ -122,4 +119,4 @@ if __name__ == "__main__":
             print(f"{key} = {value}")
     '''
     pass
-'''
+
