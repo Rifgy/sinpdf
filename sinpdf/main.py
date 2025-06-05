@@ -115,6 +115,16 @@ class SinPdfApp(QtWidgets.QWidget): #
 
         # Install the layout
         vlay = QtWidgets.QVBoxLayout()
+        vlay0 = QtWidgets.QVBoxLayout()
+        vlay1 = QtWidgets.QVBoxLayout()
+
+        vlay0.addWidget(self.path_to_scan)
+        vlay0.addWidget(self.cmb_get_base)
+        vlay0.addWidget(self.text_to_search)
+        vlay1.addWidget(self.get_path_button)
+        vlay1.addWidget(self.chk_new_base)
+        vlay1.addWidget(self.get_help)
+
         hlay = QtWidgets.QHBoxLayout()
         hlay1 = QtWidgets.QHBoxLayout()
         hlay.addWidget(self.path_to_scan)
