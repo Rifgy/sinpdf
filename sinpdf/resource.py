@@ -1,25 +1,16 @@
 about_msg = """
     <b>SinPdf версия {version}</b>
+    <p>Быстрый поиск по содержимому PDF файлов</p>
     <p>Вы можете скачать последнюю версию здесь:</p>
-    <p><a href="https://github.com/Rifgy/sinpdf/tree/master">
-    https://github.com/Rifgy/sinpdf/tree/master</a></p>
+    <p><a href="https://github.com/Rifgy/sinpdf.git">https://github.com/Rifgy/sinpdf.git</a></p>
     <p>Copyright &copy; 2025-{year}, Rifgy</p>
     <p>Эта программа является свободным программным обеспечением:
     вы можете распространять ее и/или изменять в соответствии с
-    условиями GNU General Public License (GNU GPL), опубликованной
-     Фондом свободного программного обеспечения, либо версии 3
-    Лицензии, либо (по вашему выбору) любой более поздней версии.</p>
+    условиями <b>MIT License</b>, опубликованной Open Source Initiative.</p>
     <p>Данная программа распространяется в надежде, что она будет
     полезна, но БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ; даже без подразумеваемой
     гарантии ТОРГОВОЙ ПРИГОДНОСТИ или ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ
      ЦЕЛИ.
-    </p><p>
-     Дополнительную информацию см. в GNU GPL.
-    </p><p>
-    Вместе с этой программой вы должны были получить копию GNU GPL.</p>
-    <p>Если нет, см. <a href="http://www.gnu.org/licenses/">http://www.
-    gnu.org/licenses/</a>
-    </p>
 """
 
 help_msg = ""
