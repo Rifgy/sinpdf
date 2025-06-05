@@ -185,7 +185,13 @@ class SinPdfApp(QtWidgets.QWidget): #
         """
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
-        #ogging.debug(f'Search text changed to: {search_str}')
+
+    '''
+    def on_get_base_changed(self, index):
+        selected_value = self.get_base.currentText()
+        selected_key = self.get_base.itemData(index)
+        self.update_status_bar(f"Select: {selected_value} (Key: {selected_key})")
+    '''
 
     def on_search_enter(self) -> None:
         """
