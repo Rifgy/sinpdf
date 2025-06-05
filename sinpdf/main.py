@@ -35,7 +35,7 @@ reg = registry()
 # declarative base class
 Base = reg.generate_base()
 
-# Определяем модель книги
+# determine the model of the result base
 class ResultBase(Base):
     __tablename__ = 'results'
     id = Column(Integer, Sequence('result_id_seq'), primary_key=True)
