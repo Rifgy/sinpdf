@@ -126,11 +126,9 @@ class SinPdfApp(QtWidgets.QWidget): #
         vlay1.addWidget(self.get_help)
 
         hlay = QtWidgets.QHBoxLayout()
-        hlay1 = QtWidgets.QHBoxLayout()
-        hlay.addWidget(self.path_to_scan)
-        hlay.addWidget(self.get_path_button)
-        hlay1.addWidget(self.text_to_search)
-        hlay1.addWidget(self.get_help)
+        hlay.addLayout(vlay0)
+        hlay.addLayout(vlay1)
+
         vlay.addLayout(hlay)
         vlay.addWidget(self.get_base)
         vlay.addLayout(hlay1)
