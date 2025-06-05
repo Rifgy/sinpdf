@@ -83,10 +83,8 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.setWindowTitle(mess.WindowTitle)
         self.setMinimumSize(500,200)
 
-        # create status bar
         self.status_bar = QStatusBar()
 
-        # create UI elements
         self.path_to_scan = QLineEdit(self)
         self.path_to_scan.setPlaceholderText(mess.PathToScanPlaceholderText)
 
@@ -105,10 +103,10 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.get_help.resize(self.get_help.sizeHint())
         self.get_help.clicked.connect(self.on_get_help_click)
 
-        self.get_base = QComboBox()
-        for key, value in DB_LIST.items():
-            self.get_base.addItem(value, key)
-        self.get_base.currentIndexChanged.connect(self.on_get_base_changed)
+        #self.get_base = QComboBox()
+        #for key, value in DB_LIST.items():
+        #    self.get_base.addItem(value, key)
+        #self.get_base.currentIndexChanged.connect(self.on_get_base_changed)
 
         self.results_list = QListWidget(self)
         self.results_list.setToolTip(mess.ResultsListSetToolTip)
@@ -124,7 +122,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         hlay1.addWidget(self.text_to_search)
         hlay1.addWidget(self.get_help)
         vlay.addLayout(hlay)
-        vlay.addWidget(self.get_base)
+        #vlay.addWidget(self.get_base)
         vlay.addLayout(hlay1)
         vlay.addWidget(self.results_list)
         vlay.addWidget(self.status_bar)  # Добавляем статус-бар в макет
@@ -138,7 +136,7 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.resize(900,500)
         self.to_center()
         self.load_last_result('')
-        self.on_get_base_changed(0)
+        #self.on_get_base_changed(0)
 
     def to_center(self) -> None:
         """
@@ -195,10 +193,12 @@ class SinPdfApp(QtWidgets.QWidget): #
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
 
+    '''
     def on_get_base_changed(self, index):
         selected_value = self.get_base.currentText()
         selected_key = self.get_base.itemData(index)
         self.update_status_bar(f"Select: {selected_value} (Key: {selected_key})")
+    '''
 
     def on_search_enter(self) -> None:
         """
