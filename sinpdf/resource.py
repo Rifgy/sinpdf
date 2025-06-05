@@ -14,7 +14,6 @@ about_msg = """
 """
 help_msg = ""
 window_title = 'Search in PDF'
-
 path_to_scan_placeholdertext = 'Path to scan'
 text_to_search_placeholdertext= 'Text to search'
 get_path_button_text = '...'
@@ -55,5 +54,5 @@ class MessA:
 
 if __name__ == "__main__":
     a = MessA()
-    print(a.About)
+    print(a.ProcDlgBtnText)
     pass
