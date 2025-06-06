@@ -48,6 +48,10 @@ class MessA:
         self.ProcDlgWinTitle = proc_dlg_win_title
         self.MsgBoxWarnTitle = msgbox_warning_title
         self.MsgBoxWarnText = msgbox_warning_text
+        self.NewBaseText = chk_new_base_text
+        self.NewBaseSetToolTip = chk_new_base_settooltip
+        self.GetBaseToolTip = cmb_get_base_settooltip
+
 
 if __name__ == "__main__":
     a = MessA()
