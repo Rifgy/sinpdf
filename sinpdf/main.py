@@ -250,6 +250,15 @@ class SinPdfApp(QtWidgets.QWidget): #
                 list_result = session.query(ResultBase).all()
             for item in list_result:
                 self.results_list.addItem(f"{item.docname}")
+            '''
+            for index, item in enumerate(list_result):
+                new_item = QtWidgets.QListWidgetItem(f"{item.docname}")
+                self.results_list.addItem(new_item)
+                if index % 2 == 0:
+                    new_item.setBackground(QColor(233,252,248))  # Светло-серый цвет
+                else:
+                    new_item.setBackground(QColor(255, 255, 255))  # Белый цвет
+            '''
             # status bar update
             text = "No results found." if len(list_result) == 0 else f"{len(list_result)} result(s) found."
             self.update_status_bar(text)
