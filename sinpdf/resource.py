@@ -18,11 +18,14 @@ results_list_settooltip = 'Double click to open file'
 msgbox_about = 'SinPdf about'
 open_file_gialog_text = "Select folder to find PDF files"
 scan_file_in_dir = 'Scan all PDF file\'s in '
-proc_dlg_text = "Processing files..."
-proc_dlg_bnt_text = "Cancel"
-proc_dlg_win_title = "File Processing"
-msgbox_warning_title = "Select folder error"
-msgbox_warning_text = "Please select directory with files"
+proc_dlg_text = 'Processing files...'
+proc_dlg_bnt_text = 'Cancel'
+proc_dlg_win_title = 'File Processing'
+msgbox_warning_title = 'Select folder error'
+msgbox_warning_text = 'Please select directory with files'
+cmb_get_base_settooltip = 'Select base to search'
+chk_new_base_text = 'New'
+chk_new_base_settooltip = 'Put scan result\'s to NEW base\n default: "results.db"'
 
 
 class MessA:
