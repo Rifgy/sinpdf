@@ -21,6 +21,8 @@ class ConfigReader:
         :rtype: None
         """
         self.config['Default'] = {
+            'WSize': 900,
+            'HSize': 500,
             'FontName': 'Arial',
             'FontSize': 12
         }
