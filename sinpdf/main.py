@@ -152,7 +152,7 @@ class SinPdfApp(QtWidgets.QWidget): #
 
 
         # resize, move form to center, and load data from db to results_list
-        self.resize(900,500)
+        self.resize(WSIZE,HSIZE)
         self.to_center()
         self.load_last_result('')
         self.on_get_base_changed(0)
