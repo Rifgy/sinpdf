@@ -18,6 +18,8 @@ from sinpdf.resource import MessA
 __version__ = "0.0.4"
 
 config_reader = ConfigReader('config.ini')
+WSIZE = config_reader.get_int('Default', 'WSize')
+HSIZE = config_reader.get_int('Default', 'HSize')
 APP_FONT = config_reader.get('Default', 'FontName')
 APP_FONTSIZE = config_reader.get_int('Default', 'FontSize')
 BASE_NAME = config_reader.get('ScanOpt', 'BaseName')
