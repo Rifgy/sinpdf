@@ -105,7 +105,8 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.get_help.resize(self.get_help.sizeHint())
         self.get_help.clicked.connect(self.on_get_help_click)
 
-        self.get_base = QComboBox()
+        self.cmb_get_base = QComboBox()
+        self.cmb_get_base.setToolTip(mess.GetBaseToolTip)
         for key, value in DB_LIST.items():
             self.get_base.addItem(value, key)
         self.get_base.currentIndexChanged.connect(self.on_get_base_changed)
