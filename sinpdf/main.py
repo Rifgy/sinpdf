@@ -330,7 +330,7 @@ class SinPdfApp(QtWidgets.QWidget): #
 if __name__ == '__main__':
     try:
         app = QtWidgets.QApplication(sys.argv)
-        app.setFont(QFont(APP_FONT, APP_FONTSIZE))
+        #app.setFont(QFont(APP_FONT, APP_FONTSIZE))
         ex = SinPdfApp()
         ex.show()
         sys.exit(app.exec_())
