@@ -149,9 +149,10 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.setTabOrder(self.chk_new_base, self.text_to_search)
         self.setTabOrder(self.text_to_search, self.get_help)
         self.setTabOrder(self.get_help,self.results_list)
-
-
-        # resize, move form to center, and load data from db to results_list
+        # title, esize, move form to center, and load data from db to results_list
+        self.setWindowTitle(mess.WindowTitle)
+        self.setMinimumSize(500,300) #(WSIZE,HSIZE)
+        self.setFont(QFont(APP_FONT, APP_FONTSIZE))
         self.resize(WSIZE,HSIZE)
         self.to_center()
         self.load_last_result('')
