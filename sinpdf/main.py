@@ -213,6 +213,13 @@ class SinPdfApp(QtWidgets.QWidget): #
         selected_key = self.cmb_get_base.itemData(index)
         self.update_status_bar(f"Select: {selected_value} (Key: {selected_key})")
 
+    def chk_new_base_checked(self, state):
+        # if checked - create NEW base
+        if state == 2:
+            print('Checkbox is checked')
+        else:
+            print('Checkbox is unchecked')
+
     def on_search_enter(self) -> None:
         """
         Processing the Enter key pressing event in text_to_search
