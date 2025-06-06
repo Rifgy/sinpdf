@@ -112,11 +112,8 @@ if __name__ == "__main__":
     '''
     ini_file_path = 'config.ini'
     config_reader = ConfigReader(ini_file_path)
-
     DB_LIST = config_reader.get_dict('BaseFiles')
-
     if DB_LIST:
-        # Выводим все опции и их значения
         for key, value in DB_LIST.items():
             print(f"{key} = {value}")
     '''

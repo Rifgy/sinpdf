@@ -24,8 +24,10 @@ proc_dlg_win_title = 'File Processing'
 msgbox_warning_title = 'Select folder error'
 msgbox_warning_text = 'Please select directory with files'
 cmb_get_base_settooltip = 'Select base to search'
-chk_new_base_text = 'New'
+chk_new_base_text = 'New DB'
 chk_new_base_settooltip = 'Put scan result\'s to NEW base\n default: "results.db"'
+no_result_found = 'No results found.'
+result_found = 'result(s) found.'
 
 
 class MessA:
@@ -51,7 +53,8 @@ class MessA:
         self.NewBaseText = chk_new_base_text
         self.NewBaseSetToolTip = chk_new_base_settooltip
         self.GetBaseToolTip = cmb_get_base_settooltip
-
+        self.NoResultFound = no_result_found
+        self.ResultFound = result_found
 
 if __name__ == "__main__":
     a = MessA()

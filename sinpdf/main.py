@@ -3,9 +3,11 @@ from datetime import datetime as dt
 
 from pathlib import Path
 
+from PIL.WmfImagePlugin import WmfStubImageFile
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import (QDesktopWidget, QMessageBox, QProgressDialog, QComboBox,
+from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QFont, QColor
+from PyQt5.QtWidgets import (QDesktopWidget, QMessageBox, QProgressDialog, QComboBox, QCheckBox,
                              QStatusBar, QLineEdit, QPushButton, QListWidget)
 
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, TEXT
@@ -26,7 +28,7 @@ BASE_NAME = config_reader.get('ScanOpt', 'BaseName')
 BASE_PATH = config_reader.get('ScanOpt', 'BasePath')
 LIMIT_TO_SCAN_PAGE = config_reader.get_int('ScanOpt', 'LimitToScanPages')
 GET_META_FROM_PDF = config_reader.get_bool('ScanOpt', 'GetMetaFromPdf')
-DB_LIST = config_reader.get_dict('BaseFile')
+DB_LIST = config_reader.get_dict('BaseFiles')
 
 #debug: Module pdfminer errors
 import logging
@@ -82,9 +84,6 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle(mess.WindowTitle)
-        self.setMinimumSize(500,200)
-
         self.status_bar = QStatusBar()
 
         self.path_to_scan = QLineEdit(self)
@@ -106,12 +105,13 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.get_help.clicked.connect(self.on_get_help_click)
 
         self.cmb_get_base = QComboBox()
-        self.cmb_get_base.setToolTip(mess.GetBaseToolTip)
         for key, value in DB_LIST.items():
             self.cmb_get_base.addItem(value, key)
+        self.cmb_get_base.setToolTip(mess.GetBaseToolTip)
         self.cmb_get_base.currentIndexChanged.connect(self.on_get_base_changed)
 
         self.chk_new_base = QCheckBox(mess.NewBaseText)
+        self.chk_new_base.setChecked(True)
         self.chk_new_base.setToolTip(mess.NewBaseSetToolTip)
         self.chk_new_base.stateChanged.connect(self.chk_new_base_checked)
 
@@ -119,26 +119,20 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.results_list.setToolTip(mess.ResultsListSetToolTip)
         self.results_list.doubleClicked.connect(self.on_result_item_doubleclick)
         self.results_list.keyPressEvent = self.on_results_list_keypress_event
-
         # Install the layout
         vlay = QtWidgets.QVBoxLayout()
         vlay0 = QtWidgets.QVBoxLayout()
         vlay1 = QtWidgets.QVBoxLayout()
-
         vlay0.addWidget(self.path_to_scan)
         vlay0.addWidget(self.cmb_get_base)
         vlay0.addWidget(self.text_to_search)
         vlay1.addWidget(self.get_path_button)
         vlay1.addWidget(self.chk_new_base)
         vlay1.addWidget(self.get_help)
-
         hlay = QtWidgets.QHBoxLayout()
         hlay.addLayout(vlay0)
         hlay.addLayout(vlay1)
-
         vlay.addLayout(hlay)
-        vlay.addWidget(self.get_base)
-        vlay.addLayout(hlay1)
         vlay.addWidget(self.results_list)
         vlay.addWidget(self.status_bar)
         self.setLayout(vlay)
@@ -213,7 +207,6 @@ class SinPdfApp(QtWidgets.QWidget): #
         search_str = self.text_to_search.text()
         self.load_last_result(search_str)
 
-
     def on_get_base_changed(self, index):
         selected_value = self.cmb_get_base.currentText()
         selected_key = self.cmb_get_base.itemData(index)
@@ -260,7 +253,7 @@ class SinPdfApp(QtWidgets.QWidget): #
                     new_item.setBackground(QColor(255, 255, 255))  # Белый цвет
             '''
             # status bar update
-            text = "No results found." if len(list_result) == 0 else f"{len(list_result)} result(s) found."
+            text = mess.NoResultFound if len(list_result) == 0 else f"{len(list_result)} {mess.ResultFound}"
             self.update_status_bar(text)
 
     def update_status_bar(self, text_to_status: str) -> None:
