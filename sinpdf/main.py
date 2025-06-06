@@ -108,8 +108,12 @@ class SinPdfApp(QtWidgets.QWidget): #
         self.cmb_get_base = QComboBox()
         self.cmb_get_base.setToolTip(mess.GetBaseToolTip)
         for key, value in DB_LIST.items():
-            self.get_base.addItem(value, key)
-        self.get_base.currentIndexChanged.connect(self.on_get_base_changed)
+            self.cmb_get_base.addItem(value, key)
+        self.cmb_get_base.currentIndexChanged.connect(self.on_get_base_changed)
+
+        self.chk_new_base = QCheckBox(mess.NewBaseText)
+        self.chk_new_base.setToolTip(mess.NewBaseSetToolTip)
+        self.chk_new_base.stateChanged.connect(self.chk_new_base_checked)
 
         self.results_list = QListWidget(self)
         self.results_list.setToolTip(mess.ResultsListSetToolTip)
